@@ -40,10 +40,5 @@ module OpenscapParser
 	rule_result_oscap
       end
     end
-    private
-
-    def test_result_node
-      @test_result_node ||= @report_xml.at_css('TestResult')
-    end
   end
 end

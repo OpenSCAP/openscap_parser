@@ -8,11 +8,11 @@ module OpenscapParser
     def self.included(base)
       base.class_eval do
         def host
-          @metadata&.dig('fqdn') || report_xml.search('target').text
+          @report_xml.search('target').text
         end
 
         def description
-          report_xml.search('description').first.text
+          @report_xml.search('description').first.text
         end
 
         def report_xml(report_contents = '')
