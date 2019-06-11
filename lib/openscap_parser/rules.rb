@@ -6,7 +6,7 @@ module OpenscapParser
     def self.included(base)
       base.class_eval do
         def rule_ids
-          test_result_node.xpath('.//xmlns:rule-result/@idref').map(&:value)
+          test_result_node.xpath('.//rule-result/@idref').map(&:value)
         end
 
         def rule_objects
