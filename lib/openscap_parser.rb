@@ -5,6 +5,7 @@ require 'openscap_parser/rule_result'
 require 'openscap_parser/rules'
 require 'openscap_parser/version'
 require 'openscap_parser/xml_report'
+require 'openscap_parser/ds'
 
 require 'date'
 
