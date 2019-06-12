@@ -53,5 +53,21 @@ class OpenscapParserTest < Minitest::Test
     should 'list all rules' do
       assert_empty(@arbitrary_rules - @report_parser.rule_ids)
     end
+
+    should 'parse rule references' do
+      rule = @report_parser.rule_objects.find do |r|
+        r.title == 'Disable At Service (atd)'
+      end
+
+      references = [
+        {:href=>"http://iase.disa.mil/stigs/cci/Pages/index.aspx",
+         :label=>"CCI-000381"},
+        {:href=>'http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.'\
+          '800-53r4.pdf',
+         :label=>"CM-7"}
+      ]
+
+      assert_equal references, rule.references
+    end
   end
 end
