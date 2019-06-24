@@ -9,10 +9,6 @@ class XMLReportTest < Minitest::Test
     report_xml(file_fixture('xccdf_report.xml').read)
   end
 
-  test 'report_xml parses the XML report' do
-    assert_equal @report_xml.class, Nokogiri::XML::Document
-  end
-
   test 'report_description' do
     assert_match(/^This guide presents/, description)
   end
