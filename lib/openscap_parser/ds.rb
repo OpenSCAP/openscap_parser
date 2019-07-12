@@ -13,6 +13,12 @@ module OpenscapParser
       @profiles ||= profile_nodes
     end
 
+    def valid?
+      return true if @report_xml.root.name == 'data-stream-collection' && namespaces.keys.include?('xmlns:ds')
+      return true if @report_xml.root.name == 'Tailoring' && namespaces.keys.include?('xmlns:xccdf')
+      false
+    end
+
     private
 
     def profile_nodes
