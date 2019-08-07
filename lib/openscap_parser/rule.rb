@@ -20,11 +20,15 @@ module OpenscapParser
     end
 
     def description
-      @description ||= @rule_xml.at_css('description').text.delete("\n")
+      rule_node ||= @rule_xml.at_css('description')
+      @description ||= newline_to_whitespace(rule_node.text) if rule_node && rule_node.text
     end
 
     def rationale
-      @rationale ||= @rule_xml.at_css('rationale').children.text.delete("\n")
+      rationale_node ||= @rule_xml.at_css('rationale')
+      @rationale ||= newline_to_whitespace(rationale_node.children.text) if rationale_node &&
+        rationale_node.children &&
+        rationale_node.children.text
     end
 
     def references
@@ -35,10 +39,15 @@ module OpenscapParser
 
     def identifier
       @identifier ||= {
-        label: @rule_xml.at_css('ident')&.text,
+        label: @rule_xml.at_css('ident') && @rule_xml.at_css('ident').text,
         system: (ident = @rule_xml.at_css('ident')) && ident['system']
       }
     end
+
+    private
+
+    def newline_to_whitespace(string)
+      string.gsub(/ *\n+/, " ").strip
+    end
   end
 end
-

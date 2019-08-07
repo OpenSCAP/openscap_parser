@@ -69,5 +69,23 @@ class OpenscapParserTest < Minitest::Test
 
       assert_equal references, rule.references
     end
+
+    should 'parse rule description without newlines' do
+      rule = @report_parser.rule_objects.find do |rule_obj|
+        rule_obj.id == 'xccdf_org.ssgproject.content_rule_service_atd_disabled'
+      end
+
+      desc = <<~DESC.gsub("\n", ' ').strip
+        The at and batch commands can be used to
+        schedule tasks that are meant to be executed only once. This allows delayed
+        execution in a manner similar to cron, except that it is not
+        recurring. The daemon atd keeps track of tasks scheduled via
+        at and batch, and executes them at the specified time.
+        The atd service can be disabled with the following command:
+        $ sudo systemctl disable atd.service
+      DESC
+
+      assert_equal desc, rule.description
+    end
   end
 end
