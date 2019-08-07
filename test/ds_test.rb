@@ -33,6 +33,30 @@ class DsTest < MiniTest::Test
     end
   end
 
+  context 'format validations' do
+    should 'remember the namespaces after removing them' do
+      refute_empty(create_parser('ssg-rhel7-ds.xml').namespaces)
+    end
+
+    should 'recognize scap content as valid' do
+      assert(create_parser('ssg-rhel7-ds.xml').valid?)
+    end
+
+    should 'recognize tailoring file as valid' do
+      assert(create_parser('ssg-rhel7-ds-tailoring.xml').valid?)
+    end
+
+    should 'not recognize random file as valid' do
+      assert_raises Nokogiri::XML::SyntaxError do
+        create_parser('invalid_report.xml')
+      end
+    end
+
+    should 'not recognize xccdf report as valid ds file' do
+      refute(create_parser('rhel-xccdf-report.xml').valid?)
+    end
+  end
+
   def create_parser(file)
     scap_content = file_fixture(file).read
     ::OpenscapParser::Ds.new(scap_content)
