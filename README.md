@@ -2,8 +2,6 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/openscap_parser`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -24,15 +22,18 @@ Or install it yourself as:
 
 ARF/XCCDF report goes IN - Ruby hash goes OUT
 
-{
-	profile
-	host
-	score
-	start_time
-	end_time
-	rule_result
+```rb
+parser = OpenscapParser::Base.new(File.read('rhel7-xccdf_org.ssgproject.content_profile_standard.xml'))
+parser.host # "rhel7-insights-client.virbr0.akofink-laptop"
+parser.start_time # <DateTime: 2019-08-08T17:25:50+00:00 ((2458704j,62750s,0n),+0s,2299161j)>
+parser.end_time # <DateTime: 2019-08-08T17:26:45+00:00 ((2458704j,62805s,0n),+0s,2299161j)>
+parser.score # 80.833328
+parser.profiles # {"xccdf_org.ssgproject.content_profile_standard"=>"Standard System Security Profile for Red Hat Enterprise Linux 7"}
+parser.rules # [#<OpenscapParser::Rule:0x00005576e752db7 ... >, ...]
+parser.rule_results # [#<OpenscapParser::RuleResult:0x00005576e8022f60 @id="xccdf_org.ssgproject.content_rule_package_rsh_removed", @result="notselected">, ...]
 
-}
+# and more!
+```
 
 
 ## Development
