@@ -16,6 +16,7 @@ module OpenscapParser
             Rule.new(rule_xml: rule)
           end
         end
+        alias :rules :rule_objects
       end
     end
   end
