@@ -35,6 +35,17 @@ parser.rule_results # [#<OpenscapParser::RuleResult:0x00005576e8022f60 @id="xccd
 # and more!
 ```
 
+### Fetching SCAP Security Guide Content
+
+This gem includes a rake task to sync content from the [ComplianceAsCode project](https://github.com/ComplianceAsCode/content). The following examples show how to download and exract datastream files from the released versions:
+
+```sh
+rake ssg:sync DATASTREAMS=latest:fedora # fetch and extract the latest fedora datastream
+rake ssg:sync DATASTREAMS=v0.1.45:fedora,v0.1.45:firefox # fetch and extract tag v0.1.45 for fedora and firefox datastreams
+rake ssg:sync_rhel # fetch and extract the latest released versions of the RHEL 6, 7, and 8 datastreams
+```
+
+An SSG version will be downloaded only once, even if it is specified multiple times for multiple datastreams.
 
 ## Development
 
