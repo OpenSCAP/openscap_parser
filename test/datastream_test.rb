@@ -5,20 +5,21 @@ class DatastreamTest < MiniTest::Test
   context 'scap content' do
     should 'be able to parse profiles' do
       parser = create_parser('ssg-rhel7-ds.xml')
-      profile_titles = [
-        "United States Government Configuration Baseline",
-        "Standard System Security Profile for Red Hat Enterprise Linux 7",
-        "Criminal Justice Information Services (CJIS) Security Policy",
-        "C2S for Red Hat Enterprise Linux 7",
-        "Health Insurance Portability and Accountability Act (HIPAA)",
-        "Unclassified Information in Non-federal Information Systems and Organizations (NIST 800-171)",
-        "DISA STIG for Red Hat Enterprise Linux 7",
-        "OSPP - Protection Profile for General Purpose Operating Systems v. 4.2",
-        "PCI-DSS v3 Control Baseline for Red Hat Enterprise Linux 7",
-        "Red Hat Corporate Profile for Certified Cloud Providers (RH CCP)",
-        "PCI-DSS v3 Control Baseline for Red Hat Enterprise Linux 7"
+      profile_ref_ids = [
+        "xccdf_org.ssgproject.content_profile_standard",
+        "xccdf_org.ssgproject.content_profile_nist-800-171-cui",
+        "xccdf_org.ssgproject.content_profile_rht-ccp",
+        "xccdf_org.ssgproject.content_profile_C2S",
+        "xccdf_org.ssgproject.content_profile_cjis",
+        "xccdf_org.ssgproject.content_profile_hipaa",
+        "xccdf_org.ssgproject.content_profile_ospp",
+        "xccdf_org.ssgproject.content_profile_ospp42",
+        "xccdf_org.ssgproject.content_profile_pci-dss",
+        "xccdf_org.ssgproject.content_profile_stig-rhel7-disa",
+        "xccdf_org.ssgproject.content_profile_rhelh-vpp",
+        "xccdf_org.ssgproject.content_profile_pci-dss_centric"
       ]
-      assert_equal(profile_titles, parser.profiles.map(&:title))
+      assert_equal(profile_ref_ids, parser.profiles.map { |profile| profile.id })
     end
   end
 
