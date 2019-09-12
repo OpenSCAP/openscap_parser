@@ -10,13 +10,13 @@ class XmlFileTest < Minitest::Test
     @valid_report = file_fixture('xccdf_report.xml').read
   end
 
-  test 'report_xml parses a valid XML report' do
-    assert_equal report_xml(@valid_report).class, Nokogiri::XML::Document
+  test 'parsed_xml parses a valid XML report' do
+    assert_equal parsed_xml(@valid_report).class, Nokogiri::XML::Document
   end
 
-  test 'report_xml handles an invalid XML report' do
+  test 'parsed_xml handles an invalid XML report' do
     assert_raises Nokogiri::XML::SyntaxError do
-      report_xml(@invalid_report)
+      parsed_xml(@invalid_report)
     end
   end
 end

@@ -18,7 +18,7 @@ module OpenscapParser
         private
 
         def profile_node
-          @report_xml.at_xpath(".//Profile\
+          @parsed_xml.at_xpath(".//Profile\
                              [contains('#{test_result_node['id']}', @id)]")
         end
       end

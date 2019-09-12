@@ -12,7 +12,7 @@ module OpenscapParser
         def rule_objects
           return @rule_objects unless @rule_objects.nil?
 
-          @rule_objects ||= @report_xml.search('Rule').map do |rule|
+          @rule_objects ||= @parsed_xml.search('Rule').map do |rule|
             Rule.new(rule_xml: rule)
           end
         end

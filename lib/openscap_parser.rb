@@ -20,7 +20,7 @@ module OpenscapParser
     include OpenscapParser::RuleResults
 
     def initialize(report)
-      report_xml(report)
+      parsed_xml(report)
     end
 
     def score

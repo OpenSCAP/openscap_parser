@@ -20,7 +20,7 @@ class ProfilesTest < Minitest::Test
         OpenStruct.new(id: ['xccdf_org.ssgproject.content_profile_standard'])
       end
 
-      report_xml(file_fixture('xccdf_report.xml').read)
+      parsed_xml(file_fixture('xccdf_report.xml').read)
 
       expected = {
         'xccdf_org.ssgproject.content_profile_standard' => \
@@ -35,7 +35,7 @@ class ProfilesTest < Minitest::Test
                             'ssgproject.content_profile_ospp42'])
       end
 
-      report_xml(file_fixture('rhel-xccdf-report.xml').read)
+      parsed_xml(file_fixture('rhel-xccdf-report.xml').read)
 
       expected = {
         'xccdf_org.ssgproject.content_profile_ospp42' => 'OSPP - Protection '\

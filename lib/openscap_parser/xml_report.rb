@@ -11,11 +11,11 @@ module OpenscapParser
         include OpenscapParser::XmlFile
 
         def host
-          @report_xml.search('target').text
+          @parsed_xml.search('target').text
         end
 
         def description
-          @report_xml.search('description').first.text
+          @parsed_xml.search('description').first.text
         end
       end
     end
