@@ -11,5 +11,13 @@ module OpenscapParser
       @namespaces = @parsed_xml.namespaces.clone
       @parsed_xml.remove_namespaces!
     end
+
+    def xpath_node(xpath)
+      @parsed_xml.at_xpath(xpath)
+    end
+
+    def xpath_nodes(xpath)
+      @parsed_xml.xpath(xpath)
+    end
   end
 end

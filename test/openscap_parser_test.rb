@@ -24,7 +24,7 @@ class OpenscapParserTest < Minitest::Test
         'Red Hat Corporate Profile for Certified Cloud Providers (RH CCP)'
       }
       @report_parser = ::OpenscapParser::Base.new(fake_report)
-      assert_equal 1, @report_parser.profiles.count
+      assert_equal 1, @report_parser.test_result_profiles.count
     end
   end
 
