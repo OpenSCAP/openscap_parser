@@ -4,6 +4,7 @@ require 'pathname'
 
 require "minitest/autorun"
 require 'shoulda-context'
+require 'mocha/minitest'
 
 def test(name, &block)
   test_name = "test_#{name.gsub(/\s+/, '_')}".to_sym
