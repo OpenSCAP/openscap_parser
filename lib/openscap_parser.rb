@@ -18,21 +18,10 @@ module OpenscapParser
     include OpenscapParser::Profiles
     include OpenscapParser::Rules
     include OpenscapParser::RuleResults
+    include OpenscapParser::TestResult
 
     def initialize(report)
-      report_xml(report)
-    end
-
-    def score
-      test_result_node.search('score').text.to_f
-    end
-
-    def start_time
-      @start_time ||= DateTime.parse(test_result_node['start-time'])
-    end
-
-    def end_time
-      @end_time ||= DateTime.parse(test_result_node['end-time'])
+      parsed_xml(report)
     end
   end
 end

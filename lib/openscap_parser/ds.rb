@@ -6,7 +6,7 @@ module OpenscapParser
     include OpenscapParser::XmlFile
 
     def initialize(report)
-      report_xml report
+      parsed_xml report
     end
 
     def profiles
@@ -14,15 +14,15 @@ module OpenscapParser
     end
 
     def valid?
-      return true if @report_xml.root.name == 'data-stream-collection' && namespaces.keys.include?('xmlns:ds')
-      return true if @report_xml.root.name == 'Tailoring' && namespaces.keys.include?('xmlns:xccdf')
+      return true if @parsed_xml.root.name == 'data-stream-collection' && namespaces.keys.include?('xmlns:ds')
+      return true if @parsed_xml.root.name == 'Tailoring' && namespaces.keys.include?('xmlns:xccdf')
       false
     end
 
     private
 
     def profile_nodes
-      @report_xml.xpath(".//Profile").map do |node|
+      @parsed_xml.xpath(".//Profile").map do |node|
         id_node = node.attribute('id')
         id = id_node.value if id_node
         title_node = node.at_xpath('./title')

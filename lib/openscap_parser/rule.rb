@@ -16,19 +16,22 @@ module OpenscapParser
     end
 
     def title
-      @title ||= @rule_xml.at_css('title').children.first.text
+      @title ||= @rule_xml.at_css('title') &&
+        @rule_xml.at_css('title').text
     end
 
     def description
-      rule_node ||= @rule_xml.at_css('description')
-      @description ||= newline_to_whitespace(rule_node.text) if rule_node && rule_node.text
+      @description ||= newline_to_whitespace(
+        @rule_xml.at_css('description') &&
+          @rule_xml.at_css('description').text || ''
+      )
     end
 
     def rationale
-      rationale_node ||= @rule_xml.at_css('rationale')
-      @rationale ||= newline_to_whitespace(rationale_node.children.text) if rationale_node &&
-        rationale_node.children &&
-        rationale_node.children.text
+      @rationale ||= newline_to_whitespace(
+        @rule_xml.at_css('rationale') &&
+          @rule_xml.at_css('rationale').text || ''
+      )
     end
 
     def references

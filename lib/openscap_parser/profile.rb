@@ -1,6 +1,22 @@
 module OpenscapParser
   class Profile
-    attr_acessor :id, :title, :description
+    def initialize(profile_xml: nil)
+      @profile_xml = profile_xml
+    end
+
+    def id
+      @id ||= @profile_xml['id']
+    end
+
+    def title
+      @title ||= @profile_xml.at_css('title') &&
+        @profile_xml.at_css('title').text
+    end
+
+    def description
+      @description ||= @profile_xml.at_css('description') &&
+        @profile_xml.at_css('description').text
+    end
 
     def to_h
       { :id => id, :title => title, :description => description }

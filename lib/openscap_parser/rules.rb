@@ -10,13 +10,15 @@ module OpenscapParser
         end
 
         def rule_objects
-          return @rule_objects unless @rule_objects.nil?
-
-          @rule_objects ||= @report_xml.search('Rule').map do |rule|
-            Rule.new(rule_xml: rule)
+          @rule_objects ||= rule_nodes.map do |rule_node|
+            Rule.new(rule_xml: rule_node)
           end
         end
         alias :rules :rule_objects
+
+        def rule_nodes(xpath = ".//Rule")
+          xpath_nodes(xpath)
+        end
       end
     end
   end

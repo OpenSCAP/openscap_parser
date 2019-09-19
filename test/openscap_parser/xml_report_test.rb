@@ -6,7 +6,7 @@ class XMLReportTest < Minitest::Test
   include OpenscapParser::XMLReport
 
   def setup
-    report_xml(file_fixture('xccdf_report.xml').read)
+    parsed_xml(file_fixture('xccdf_report.xml').read)
   end
 
   test 'report_description' do
