@@ -1,28 +1,23 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'openscap_parser/rule_reference'
 
 class OpenscapParserTest < Minitest::Test
   def setup
     fake_report = file_fixture('xccdf_report.xml').read
-    @profile = {
-      'xccdf_org.ssgproject.content_profile_standard' =>
-      'Standard System Security Profile for Fedora'
-    }
+    @profile_ref_id = 'xccdf_org.ssgproject.content_profile_standard'
     @report_parser = ::OpenscapParser::Base.new(fake_report)
   end
 
   context 'profile' do
     should 'be able to parse it' do
-      assert_equal(@profile, @report_parser.profiles)
+      assert_equal(@profile_ref_id, @report_parser.profiles.first.id)
     end
 
     should 'not save more than one profile when there are no test results' do
       fake_report = file_fixture('rhel-xccdf-report.xml').read
-      @profile = {
-        'xccdf_org.ssgproject.content_profile_rht-ccp' =>
-        'Red Hat Corporate Profile for Certified Cloud Providers (RH CCP)'
-      }
+      @profile_ref_id = 'xccdf_org.ssgproject.content_profile_rht-ccp'
       @report_parser = ::OpenscapParser::Base.new(fake_report)
       assert_equal 1, @report_parser.test_result_profiles.count
     end
@@ -55,19 +50,17 @@ class OpenscapParserTest < Minitest::Test
     end
 
     should 'parse rule references' do
-      rule = @report_parser.rule_objects.find do |r|
-        r.title == 'Disable At Service (atd)'
+      rule = @report_parser.rules.find do |r|
+        r.id == 'xccdf_org.ssgproject.content_rule_service_atd_disabled'
       end
 
       references = [
-        {:href=>"http://iase.disa.mil/stigs/cci/Pages/index.aspx",
-         :label=>"CCI-000381"},
-        {:href=>'http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.'\
-          '800-53r4.pdf',
-         :label=>"CM-7"}
+        ["http://iase.disa.mil/stigs/cci/Pages/index.aspx", "CCI-000381"],
+        ['http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.'\
+         '800-53r4.pdf', "CM-7"]
       ]
 
-      assert_equal references, rule.references
+      assert_equal references, rule.references.map { |rr| [rr.href, rr.label] }
     end
 
     should 'parse rule description without newlines' do

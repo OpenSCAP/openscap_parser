@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'openscap_parser/profiles'
+require 'openscap_parser/profile'
 require 'openscap_parser/rule'
 require 'openscap_parser/rule_result'
 require 'openscap_parser/rule_results'

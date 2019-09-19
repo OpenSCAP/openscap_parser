@@ -7,10 +7,8 @@ module OpenscapParser
     def self.included(base)
       base.class_eval do
         def profiles
-          @profiles ||= profile_nodes.inject({}) do |profiles, profile_node|
-            profiles[profile_node['id']] = profile_node.at_css('title').text
-
-            profiles
+          @profiles ||= profile_nodes.map do |profile_node|
+            OpenscapParser::Profile.new(profile_xml: profile_node)
           end
         end
 
