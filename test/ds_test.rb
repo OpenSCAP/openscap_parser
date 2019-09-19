@@ -18,7 +18,7 @@ class DsTest < MiniTest::Test
         "Red Hat Corporate Profile for Certified Cloud Providers (RH CCP)",
         "PCI-DSS v3 Control Baseline for Red Hat Enterprise Linux 7"
       ]
-      assert_equal(profile_titles, parser.profiles.map { |profile| profile[:title] })
+      assert_equal(profile_titles, parser.profiles.map(&:title))
     end
   end
 
@@ -29,7 +29,7 @@ class DsTest < MiniTest::Test
         "Standard System Security Profile [CUSTOMIZED]",
         "Common Profile for General-Purpose Systems [CUSTOMIZED]"
       ]
-      assert_equal(profile_titles, parser.profiles.map { |profile| profile[:title] })
+      assert_equal(profile_titles, parser.profiles.map(&:title))
     end
   end
 

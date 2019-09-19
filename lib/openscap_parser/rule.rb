@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'openscap_parser/rule_identifier'
+require 'openscap_parser/rule_reference'
+
 # Mimics openscap-ruby Rule interface
 module OpenscapParser
   class Rule
@@ -9,6 +12,10 @@ module OpenscapParser
 
     def id
       @id ||= @rule_xml['id']
+    end
+
+    def selected
+      @selected ||= @rule_xml['selected']
     end
 
     def severity
@@ -35,16 +42,21 @@ module OpenscapParser
     end
 
     def references
-      @references ||= @rule_xml.css('reference').map do |node|
-        { href: node['href'], label: node.text }
+      @references ||= reference_nodes.map do |node|
+        RuleReference.new(reference_xml: node)
       end
     end
 
+    def reference_nodes
+      @reference_nodes ||= @rule_xml.xpath('reference')
+    end
+
     def identifier
-      @identifier ||= {
-        label: @rule_xml.at_css('ident') && @rule_xml.at_css('ident').text,
-        system: (ident = @rule_xml.at_css('ident')) && ident['system']
-      }
+      @identifier ||= RuleIdentifier.new(identifier_xml: @identifier_node)
+    end
+
+    def identifier_node
+      @identifier_node ||= @rule_xml.at_xpath('ident')
     end
 
     private
