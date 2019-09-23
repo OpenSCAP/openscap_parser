@@ -2,7 +2,7 @@
 require 'openscap_parser/xml_file'
 
 module OpenscapParser
-  class Ds
+  class Datastream
     include OpenscapParser::XmlFile
     include OpenscapParser::Rules
     include OpenscapParser::Profiles

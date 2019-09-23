@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
-class DsTest < MiniTest::Test
+class DatastreamTest < MiniTest::Test
   context 'scap content' do
     should 'be able to parse profiles' do
       parser = create_parser('ssg-rhel7-ds.xml')
@@ -59,6 +59,6 @@ class DsTest < MiniTest::Test
 
   def create_parser(file)
     scap_content = file_fixture(file).read
-    ::OpenscapParser::Ds.new(scap_content)
+    ::OpenscapParser::Datastream.new(scap_content)
   end
 end
