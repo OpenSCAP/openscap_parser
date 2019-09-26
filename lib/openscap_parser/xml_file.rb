@@ -13,11 +13,11 @@ module OpenscapParser
     end
 
     def xpath_node(xpath)
-      @parsed_xml.at_xpath(xpath)
+      @parsed_xml && @parsed_xml.at_xpath(xpath)
     end
 
     def xpath_nodes(xpath)
-      @parsed_xml.xpath(xpath)
+      @parsed_xml && @parsed_xml.xpath(xpath) || []
     end
   end
 end

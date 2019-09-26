@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 require 'openscap_parser/xml_file'
+require 'openscap_parser/benchmarks'
 
 module OpenscapParser
   class Datastream
     include OpenscapParser::XmlFile
-    include OpenscapParser::Rules
-    include OpenscapParser::Profiles
+    include OpenscapParser::Benchmarks
 
     def initialize(report)
       parsed_xml report
