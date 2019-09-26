@@ -10,6 +10,7 @@ require 'openscap_parser/xml_report'
 require 'openscap_parser/datastream'
 
 require 'date'
+require 'railtie' if defined?(Rails)
 
 module OpenscapParser
   class Error < StandardError; end
