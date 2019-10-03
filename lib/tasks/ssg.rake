@@ -27,6 +27,7 @@ namespace :ssg do
     require 'ssg'
 
     ds_zip_filenames = Ssg::Downloader.download!(DATASTREAMS.keys)
-    Ssg::Unarchiver.unarchive!(ds_zip_filenames, DATASTREAMS)
+    DATASTREAM_FILENAMES = Ssg::Unarchiver.
+      unarchive!(ds_zip_filenames, DATASTREAMS)
   end
 end

@@ -11,7 +11,7 @@ module OpenscapParser
 
         def rule_objects
           @rule_objects ||= rule_nodes.map do |rule_node|
-            Rule.new(rule_xml: rule_node)
+            Rule.new(parsed_xml: rule_node)
           end
         end
         alias :rules :rule_objects
