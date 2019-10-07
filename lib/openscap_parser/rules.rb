@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
+require 'openscap_parser/rule'
+
 module OpenscapParser
   # Methods related to parsing rules
   module Rules
     def self.included(base)
       base.class_eval do
-        def rule_ids
-          test_result_node.xpath('.//rule-result/@idref').map(&:value)
-        end
-
         def rule_objects
           @rule_objects ||= rule_nodes.map do |rule_node|
             Rule.new(parsed_xml: rule_node)

@@ -6,43 +6,38 @@ require 'openscap_parser/xml_file'
 
 # Mimics openscap-ruby Rule interface
 module OpenscapParser
-  class Rule
+  class Rule < XmlNode
     include OpenscapParser::Util
-    include OpenscapParser::XmlFile
     include OpenscapParser::RuleReferences
 
-    def initialize(parsed_xml: nil)
-      @parsed_xml = parsed_xml
-    end
-
     def id
-      @id ||= @parsed_xml['id']
+      @id ||= parsed_xml['id']
     end
 
     def selected
-      @selected ||= @parsed_xml['selected']
+      @selected ||= parsed_xml['selected']
     end
 
     def severity
-      @severity ||= @parsed_xml['severity']
+      @severity ||= parsed_xml['severity']
     end
 
     def title
-      @title ||= @parsed_xml.at_css('title') &&
-        @parsed_xml.at_css('title').text
+      @title ||= parsed_xml.at_css('title') &&
+        parsed_xml.at_css('title').text
     end
 
     def description
       @description ||= newline_to_whitespace(
-        @parsed_xml.at_css('description') &&
-          @parsed_xml.at_css('description').text || ''
+        parsed_xml.at_css('description') &&
+          parsed_xml.at_css('description').text || ''
       )
     end
 
     def rationale
       @rationale ||= newline_to_whitespace(
-        @parsed_xml.at_css('rationale') &&
-          @parsed_xml.at_css('rationale').text || ''
+        parsed_xml.at_css('rationale') &&
+          parsed_xml.at_css('rationale').text || ''
       )
     end
 
@@ -52,12 +47,12 @@ module OpenscapParser
     end
 
     def rule_identifier
-      @identifier ||= RuleIdentifier.new(identifier_xml: identifier_node)
+      @identifier ||= RuleIdentifier.new(parsed_xml: identifier_node)
     end
     alias :identifier :rule_identifier
 
     def identifier_node
-      @identifier_node ||= @parsed_xml.at_xpath('ident')
+      @identifier_node ||= parsed_xml.at_xpath('ident')
     end
   end
 end

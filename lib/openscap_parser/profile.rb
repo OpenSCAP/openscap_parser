@@ -1,26 +1,34 @@
 module OpenscapParser
-  class Profile
-    def initialize(profile_xml: nil)
-      @profile_xml = profile_xml
+  class Profile < XmlNode
+    def id
+      @id ||= @parsed_xml['id']
     end
 
-    def id
-      @id ||= @profile_xml['id']
+    def extends_profile_id
+      @extends ||= @parsed_xml['extends']
     end
 
     def title
-      @title ||= @profile_xml.at_css('title') &&
-        @profile_xml.at_css('title').text
+      @title ||= @parsed_xml.at_css('title') &&
+        @parsed_xml.at_css('title').text
     end
+    alias :name :title
 
     def description
-      @description ||= @profile_xml.at_css('description') &&
-        @profile_xml.at_css('description').text
+      @description ||= @parsed_xml.at_css('description') &&
+        @parsed_xml.at_css('description').text
     end
 
     def selected_rule_ids
-      id_refs = @profile_xml.xpath("select[@selected='true']/@idref")
-      id_refs && id_refs.map(&:text)
+      @selected_rule_ids ||= @parsed_xml.xpath("select[@selected='true']/@idref") &&
+        @parsed_xml.xpath("select[@selected='true']/@idref").map(&:text)
+    end
+
+    def set_values
+      @set_values ||= @parsed_xml.xpath("set-value") &&
+        @parsed_xml.xpath("set-value").map do |set_value|
+        [set_value['idref'], set_value.text]
+      end.to_h
     end
 
     def to_h

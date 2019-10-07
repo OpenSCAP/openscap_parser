@@ -1,18 +1,18 @@
 # frozen_string_literal: true
-require 'openscap_parser/test_result'
+
+require 'openscap_parser/rule_result'
 
 module OpenscapParser
   module RuleResults
-    include TestResult
-
     def self.included(base)
       base.class_eval do
+        def rule_result_nodes
+          @rule_result_nodes ||= parsed_xml.xpath('rule-result')
+        end
+
         def rule_results
-          @rule_results ||= test_result_node.search('rule-result').map do |rr|
-            rule_result_oscap = RuleResult.new
-            rule_result_oscap.id = rr.attributes['idref'].value
-            rule_result_oscap.result = rr.search('result').first.text
-            rule_result_oscap
+          rule_result_nodes.map do |node|
+            RuleResult.new(parsed_xml: node)
           end
         end
       end

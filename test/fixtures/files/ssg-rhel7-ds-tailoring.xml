@@ -49,5 +49,6 @@ all of these checks should pass.</xccdf:description>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_disabling_quagga" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_service_zebra_disabled" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_package_quagga_removed" selected="true"/>
+    <xccdf:set-value idref="xccdf_org.ssgproject.content_value_sshd_max_auth_tries_value">10</xccdf:set-value>
   </xccdf:Profile>
 </xccdf:Tailoring>
