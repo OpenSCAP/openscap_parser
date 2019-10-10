@@ -18,6 +18,11 @@ module OpenscapParser
         @profile_xml.at_css('description').text
     end
 
+    def selected_rule_ids
+      id_refs = @profile_xml.xpath("select[@selected='true']/@idref")
+      id_refs && id_refs.map(&:text)
+    end
+
     def to_h
       { :id => id, :title => title, :description => description }
     end
