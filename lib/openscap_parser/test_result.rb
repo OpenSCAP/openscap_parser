@@ -1,46 +1,60 @@
 # frozen_string_literal: true
 
+require 'openscap_parser/rule_results'
+
 module OpenscapParser
-  module TestResult
-    def self.included(base)
-      base.class_eval do
-        def score
-          @score ||= test_result_node &&
-            test_result_node.search('score').text.to_f
-        end
+  class TestResult < XmlNode
+    include OpenscapParser::RuleResults
 
-        def start_time
-          @start_time ||= test_result_node &&
-            DateTime.parse(test_result_node['start-time'])
-        end
+    def target
+      @target ||= parsed_xml.at_xpath('target') &&
+        parsed_xml.at_xpath('target').text || ''
+    end
+    alias :host :target
 
-        def end_time
-          @end_time ||= test_result_node &&
-            DateTime.parse(test_result_node['end-time'])
-        end
+    def target_fact_nodes
+      @target_fact_nodes ||= parsed_xml.xpath('target-facts/fact')
+    end
 
-        def test_result_profiles
-          @test_result_profiles ||= test_result_profile_nodes.inject({}) do |profiles, profile_node|
-            profiles[profile_node['id']] = profile_node.at_css('title').text
+    def platform_nodes
+      @platform_nodes ||= parsed_xml.xpath('platform')
+    end
 
-            profiles
-          end
-        end
+    def title
+      @title ||= parsed_xml.at_xpath('title') &&
+        parsed_xml.at_xpath('title').text || ''
+    end
 
-        def test_result_node
-          @test_result_node ||= xpath_node('.//TestResult')
-        end
+    def identity
+      @identity ||= parsed_xml.at_xpath('identity') &&
+        parsed_xml.at_xpath('identity').text || ''
+    end
 
-        def test_result_profile_id
-          test_result_node.xpath('./profile/@idref').text
-        end
+    def profile_id
+      @profile_id ||= parsed_xml.at_xpath('profile') &&
+        parsed_xml.at_xpath('profile')['idref'] || ''
+    end
 
-        private
+    def benchmark_id
+      @benchmark_id ||= parsed_xml.at_xpath('benchmark') &&
+        parsed_xml.at_xpath('benchmark')['id'] || ''
+    end
 
-        def test_result_profile_nodes
-          profile_nodes(".//Profile [@id='#{test_result_profile_id}']")
-        end
-      end
+    def set_value_nodes
+      @set_value_nodes ||= parsed_xml.xpath('set-value')
+    end
+
+    def score
+      @score ||= parsed_xml.at_xpath('score') &&
+        parsed_xml.at_xpath('score').text.to_f
+    end
+
+    def start_time
+      @start_time ||= DateTime.parse(parsed_xml['start-time'])
+    end
+
+    def end_time
+      @end_time ||= DateTime.parse(parsed_xml['end-time'])
     end
   end
 end

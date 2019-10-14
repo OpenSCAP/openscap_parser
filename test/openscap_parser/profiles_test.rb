@@ -4,54 +4,22 @@ require 'test_helper'
 
 class ProfilesTest < Minitest::Test
   describe 'profiles are parsed from' do
-    class TestParser
-      include OpenscapParser::Profiles
-      include OpenscapParser::XMLReport
-      include OpenscapParser::TestResult
+    test 'test result file standard fedora' do
+      test_result_file = OpenscapParser::TestResultFile.new(
+        file_fixture('xccdf_report.xml').read
+      )
 
-      def report_description
-        'description'
-      end
+      assert_equal 'xccdf_org.ssgproject.content_profile_standard',
+        test_result_file.test_result.profile_id
     end
 
-    def setup
-      @profiles = nil
-    end
+    test 'test result file ospp42 rhel' do
+      test_result_file = OpenscapParser::TestResultFile.new(
+        file_fixture('rhel-xccdf-report.xml').read
+      )
 
-    test 'standard fedora' do
-      class TestParser
-        def test_result_profile_id
-          'xccdf_org.ssgproject.content_profile_standard'
-        end
-      end
-
-      test_parser = TestParser.new
-
-      test_parser.parsed_xml(file_fixture('xccdf_report.xml').read)
-
-      expected = {
-        'xccdf_org.ssgproject.content_profile_standard' => \
-        'Standard System Security Profile for Fedora'
-      }
-      assert_equal expected, test_parser.test_result_profiles
-    end
-
-    test 'ospp42 rhel' do
-      class TestParser
-        def test_result_profile_id
-          'xccdf_org.ssgproject.content_profile_ospp42'
-        end
-      end
-
-      test_parser = TestParser.new
-
-      test_parser.parsed_xml(file_fixture('rhel-xccdf-report.xml').read)
-
-      expected = {
-        'xccdf_org.ssgproject.content_profile_ospp42' => 'OSPP - Protection '\
-        'Profile for General Purpose Operating Systems v. 4.2'
-      }
-      assert_equal expected, test_parser.test_result_profiles
+      assert_equal 'xccdf_org.ssgproject.content_profile_rht-ccp',
+        test_result_file.test_result.profile_id
     end
   end
 end

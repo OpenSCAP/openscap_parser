@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 require 'test_helper'
 
-class DatastreamTest < MiniTest::Test
+class DatastreamFileTest < MiniTest::Test
   context 'scap content' do
     should 'be able to parse profiles' do
       parser = create_parser('ssg-rhel7-ds.xml')
@@ -16,24 +17,11 @@ class DatastreamTest < MiniTest::Test
         "xccdf_org.ssgproject.content_profile_ospp42",
         "xccdf_org.ssgproject.content_profile_pci-dss",
         "xccdf_org.ssgproject.content_profile_stig-rhel7-disa",
-        "xccdf_org.ssgproject.content_profile_rhelh-vpp",
-        "xccdf_org.ssgproject.content_profile_pci-dss_centric"
+        "xccdf_org.ssgproject.content_profile_rhelh-vpp"
       ]
-      assert_equal(profile_ref_ids, parser.profiles.map { |profile| profile.id })
+      assert_equal(profile_ref_ids, parser.benchmark.profiles.map { |profile| profile.id })
     end
   end
-
-  # TODO: Add Tailoring file type
-  # context 'tailoring file' do
-  #   should 'be able to parse profiles' do
-  #     parser = create_parser('ssg-rhel7-ds-tailoring.xml')
-  #     profile_titles = [
-  #       "Standard System Security Profile [CUSTOMIZED]",
-  #       "Common Profile for General-Purpose Systems [CUSTOMIZED]"
-  #     ]
-  #     assert_equal(profile_titles, parser.profiles.map(&:title))
-  #   end
-  # end
 
   context 'format validations' do
     should 'remember the namespaces after removing them' do
@@ -42,10 +30,6 @@ class DatastreamTest < MiniTest::Test
 
     should 'recognize scap content as valid' do
       assert(create_parser('ssg-rhel7-ds.xml').valid?)
-    end
-
-    should 'recognize tailoring file as valid' do
-      assert(create_parser('ssg-rhel7-ds-tailoring.xml').valid?)
     end
 
     should 'not recognize random file as valid' do
@@ -61,6 +45,6 @@ class DatastreamTest < MiniTest::Test
 
   def create_parser(file)
     scap_content = file_fixture(file).read
-    ::OpenscapParser::Datastream.new(scap_content)
+    ::OpenscapParser::DatastreamFile.new(scap_content)
   end
 end

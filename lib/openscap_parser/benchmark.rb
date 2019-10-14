@@ -8,16 +8,11 @@ require 'openscap_parser/rule_references'
 
 # Mimics openscap-ruby Benchmark interface
 module OpenscapParser
-  class Benchmark
+  class Benchmark < XmlNode
     include OpenscapParser::Util
-    include OpenscapParser::XmlFile
     include OpenscapParser::Rules
     include OpenscapParser::RuleReferences
     include OpenscapParser::Profiles
-
-    def initialize(parsed_xml: nil)
-      @parsed_xml = parsed_xml
-    end
 
     def id
       @id ||= @parsed_xml['id']

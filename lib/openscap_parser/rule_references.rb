@@ -16,7 +16,7 @@ module OpenscapParser
 
         def rule_references
           @rule_references ||= rule_reference_nodes.map do |node|
-            OpenscapParser::RuleReference.new(reference_xml: node)
+            OpenscapParser::RuleReference.new(parsed_xml: node)
           end.uniq do |reference|
             [reference.label, reference.href]
           end

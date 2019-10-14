@@ -2,17 +2,13 @@
 
 # RuleReference interface as an object
 module OpenscapParser
-  class RuleReference
-    def initialize(reference_xml: nil)
-      @reference_xml = reference_xml
-    end
-
+  class RuleReference < XmlNode
     def href
-      @href ||= @reference_xml && @reference_xml['href']
+      @href ||= @parsed_xml && @parsed_xml['href']
     end
 
     def label
-      @label ||= @reference_xml && @reference_xml.text
+      @label ||= @parsed_xml && @parsed_xml.text
     end
   end
 end
