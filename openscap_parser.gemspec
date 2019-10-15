@@ -4,15 +4,15 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "openscap_parser/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "openscap_parser"
+  spec.name          = 'openscap_parser'
   spec.version       = OpenscapParser::VERSION
-  spec.authors       = ["Daniel Lobato Garcia"]
-  spec.email         = ["me@daniellobato.me"]
+  spec.authors       = ['Daniel Lobato Garcia', 'Andrew Kofink']
+  spec.email         = ['me@daniellobato.me', 'ajkofink@gmail.com']
 
-  spec.summary       = %q{Parse OpenSCAP reports}
- # spec.description   = %q{TODO: Write a longer description or delete this line.}
-  # spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-  spec.license       = "MIT"
+  spec.summary       = %q{Parse OpenSCAP content}
+  spec.description   = %q{This gem is a Ruby interface into SCAP content. It can parse SCAP datastream files (i.e. ssg-rhel7-ds.xml), scan result files output by oscap eval, and tailoring files.}
+  spec.homepage      = 'https://github.com/dLobatog/openscap_parser'
+  spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -32,8 +32,8 @@ Gem::Specification.new do |spec|
   spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir        = "bin"
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
   spec.add_dependency "nokogiri", "~> 1.6"
