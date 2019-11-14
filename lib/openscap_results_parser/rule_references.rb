@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/xml_file'
-require 'openscap_parser/rule_reference'
+require 'openscap_results_parser/xml_file'
+require 'openscap_results_parser/rule_reference'
 
 module OpenscapParser
   # Methods related to finding and saving rule references

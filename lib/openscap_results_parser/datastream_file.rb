@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require 'openscap_parser/xml_file'
-require 'openscap_parser/benchmarks'
+require 'openscap_results_parser/xml_file'
+require 'openscap_results_parser/benchmarks'
 
 module OpenscapParser
   # A class to represent a datastream (-ds.xml) XmlFile

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/benchmark'
+require 'openscap_results_parser/benchmark'
 
 module OpenscapParser
   # Methods related to saving profiles and finding which hosts

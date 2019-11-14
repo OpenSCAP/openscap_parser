@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/util'
-require 'openscap_parser/xml_file'
-require 'openscap_parser/rules'
-require 'openscap_parser/profiles'
-require 'openscap_parser/rule_references'
+require 'openscap_results_parser/util'
+require 'openscap_results_parser/xml_file'
+require 'openscap_results_parser/rules'
+require 'openscap_results_parser/profiles'
+require 'openscap_results_parser/rule_references'
 
 # Mimics openscap-ruby Benchmark interface
 module OpenscapParser

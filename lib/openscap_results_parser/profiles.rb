@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/profile'
+require 'openscap_results_parser/profile'
 
 module OpenscapParser
   # Methods related to saving profiles and finding which hosts
