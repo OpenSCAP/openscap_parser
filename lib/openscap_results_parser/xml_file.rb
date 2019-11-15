@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'nokogiri'
-require 'openscap_parser/xml_node'
+require 'openscap_results_parser/xml_node'
 
 module OpenscapParser
   class XmlFile < XmlNode

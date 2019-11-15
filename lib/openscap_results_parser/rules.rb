@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/rule'
+require 'openscap_results_parser/rule'
 
 module OpenscapParser
   # Methods related to parsing rules

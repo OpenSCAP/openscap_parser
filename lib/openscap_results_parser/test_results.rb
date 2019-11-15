@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/test_result'
+require 'openscap_results_parser/test_result'
 
 module OpenscapParser
   module TestResults

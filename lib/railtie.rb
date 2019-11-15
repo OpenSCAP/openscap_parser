@@ -1,10 +1,10 @@
 # lib/railtie.rb
-require 'openscap_parser'
+require 'openscap_results_parser'
 
 if defined?(Rails)
   module OpenscapParser
     class Railtie < Rails::Railtie
-      railtie_name :openscap_parser
+      railtie_name :openscap_results_parser
 
       rake_tasks do
         path = File.expand_path(__dir__)

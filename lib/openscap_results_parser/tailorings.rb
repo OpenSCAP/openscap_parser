@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/tailoring'
+require 'openscap_results_parser/tailoring'
 
 module OpenscapParser
   # Methods related to parsing Xccdf Tailoring types

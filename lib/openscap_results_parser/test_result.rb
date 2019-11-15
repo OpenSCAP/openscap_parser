@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'openscap_parser/rule_results'
+require 'openscap_results_parser/rule_results'
 
 module OpenscapParser
   class TestResult < XmlNode

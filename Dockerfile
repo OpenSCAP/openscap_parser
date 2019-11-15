@@ -1,6 +1,6 @@
-# docker build . -t openscap_parser # build the container image
-# docker run -itv $PWD:/app:z openscap_parser rake # run tests
-# docker run -itv $PWD:/app:z openscap_parser pry --gem # console
+# docker build . -t openscap_results_parser # build the container image
+# docker run -itv $PWD:/app:z openscap_results_parser rake # run tests
+# docker run -itv $PWD:/app:z openscap_results_parser pry --gem # console
 
 FROM ruby:2.5
 
