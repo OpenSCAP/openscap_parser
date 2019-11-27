@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'openscap_parser/tailorings'
+
 module OpenscapParser
   # A class to represent a tailoring XmlFile
   class TailoringFile < XmlFile
