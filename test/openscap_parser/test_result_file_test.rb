@@ -115,6 +115,50 @@ class TestResultFileTest < Minitest::Test
         parse_set_values @arf_result_file
       end
     end
+
+    context 'fixes' do
+      test 'should parse fixes for xccdf report' do
+        parse_fixes @test_result_file
+      end
+
+      test 'should parse fixes for arf report' do
+        parse_fixes @arf_result_file
+      end
+
+      test 'should parse multiple fixes for one rule' do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
+        fixes = rule.fixes
+        assert_equal 2, fixes.count
+        assert fixes.map(&:id).all? { |id| id == 'ensure_gpgcheck_globally_activated' }
+        refute_equal fixes.first.system, fixes.last.system
+      end
+
+      test "should parse sub for fix" do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
+        fix = rule.fixes.find(&:sub)
+        refute fix.text
+        assert fix.sub.idref
+        assert fix.sub.text
+      end
+
+      test "should parse text for fix without sub" do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
+        fix = rule.fixes.find(&:text)
+        refute fix.sub
+        assert fix.text
+      end
+    end
+  end
+
+  private
+
+  def parse_fixes(result_file)
+    fixes = result_file.benchmark.rules.flat_map(&:fixes).map(&:to_h)
+    ids = fixes.map { |fix| fix[:id] }
+    systems = fixes.map { |fix| fix[:system] }
+    refute_empty fixes
+    assert_equal ids, ids.compact
+    assert_equal systems, systems.compact
   end
 
   def parse_set_values(result_file)

@@ -22,6 +22,16 @@ module OpenscapParser
       @result ||= parsed_xml.at_xpath('result') &&
         parsed_xml.at_xpath('result').text || ''
     end
+
+    def to_h
+      {
+        :id => id,
+        :time => time,
+        :severity => severity,
+        :weight => weight,
+        :result => result
+      }
+    end
   end
 end
 
