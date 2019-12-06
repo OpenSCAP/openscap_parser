@@ -119,7 +119,7 @@ class TestResultFileTest < Minitest::Test
 
   def parse_set_values(result_file)
     set_values = result_file.test_result.set_values.map(&:to_h)
-    idrefs = set_values.map { |val| val[:idref] }
+    idrefs = set_values.map { |val| val[:id] }
     texts = set_values.map { | val| val[:text] }
     refute_empty set_values
     assert_equal idrefs, idrefs.compact
