@@ -133,19 +133,27 @@ class TestResultFileTest < Minitest::Test
         refute_equal fixes.first.system, fixes.last.system
       end
 
-      test "should parse sub for fix" do
+      test "should parse one sub for fix" do
         rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
-        fix = rule.fixes.find(&:sub)
-        refute fix.text
-        assert fix.sub.idref
-        assert fix.sub.text
+        fix = rule.fixes.find { |fix| !fix.subs.empty? }
+        assert_equal 1, fix.subs.count
+        assert fix.subs.first.id
+        assert fix.subs.first.text
       end
 
-      test "should parse text for fix without sub" do
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
-        fix = rule.fixes.find(&:text)
-        refute fix.sub
+      test "should parse text for fix" do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_enable_selinux_bootloader" }
+        fix = rule.fixes.find { |fx| fx.system == "urn:xccdf:fix:script:sh" }
+        assert_empty fix.subs
         assert fix.text
+      end
+
+      test "should parse multiple subs for fix" do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        fix = rule.fixes.find { |fix| !fix.subs.empty? }
+        assert_equal 2, fix.subs.count
+        assert fix.subs.last.id
+        assert fix.subs.last.text
       end
     end
   end

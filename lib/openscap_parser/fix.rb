@@ -18,17 +18,13 @@ module OpenscapParser
       @complexity ||= @parsed_xml['complexity']
     end
 
-    def text
-      @parsed_xml.text unless sub
-    end
-
     def to_h
       {
         :id => id,
         :system => system,
         :complexity => complexity,
         :text => text,
-        :sub => sub.to_h
+        :subs => subs.map(&:to_h)
       }
     end
   end
