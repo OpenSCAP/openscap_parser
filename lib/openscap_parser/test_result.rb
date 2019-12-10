@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'openscap_parser/rule_results'
+require 'openscap_parser/selectors'
 
 module OpenscapParser
   class TestResult < XmlNode
     include OpenscapParser::RuleResults
+    include OpenscapParser::Selectors
 
     def target
       @target ||= parsed_xml.at_xpath('target') &&

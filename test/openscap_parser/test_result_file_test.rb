@@ -7,6 +7,10 @@ class TestResultFileTest < Minitest::Test
     @test_result_file = OpenscapParser::TestResultFile.new(
       file_fixture('xccdf_report.xml').read
     )
+
+    @arf_result_file = OpenscapParser::TestResultFile.new(
+      file_fixture('arf_report_cs2.xml').read
+    )
   end
 
   context 'benchmark' do
@@ -93,6 +97,43 @@ class TestResultFileTest < Minitest::Test
     end
 
     context 'rules' do
+      test 'should parse rules for xccdf report' do
+        parse_rules @test_result_file
+      end
+
+      test 'should parse rules for arf report' do
+        parse_rules @arf_result_file
+      end
     end
+
+    context 'set values' do
+      test 'should parse set values for xccdf report' do
+        parse_set_values @test_result_file
+      end
+
+      test 'should parse set values for arf report' do
+        parse_set_values @arf_result_file
+      end
+    end
+  end
+
+  def parse_set_values(result_file)
+    set_values = result_file.test_result.set_values.map(&:to_h)
+    idrefs = set_values.map { |val| val[:id] }
+    texts = set_values.map { | val| val[:text] }
+    refute_empty set_values
+    assert_equal idrefs, idrefs.compact
+    assert_equal texts, texts.compact
+  end
+
+  def parse_rules(result_file)
+    rules = result_file.benchmark.rules.map(&:to_h)
+    ids = rules.map { |rule| rule[:id] }
+    titles = rules.map { |rule| rule[:title] }
+    selected = rules.map { |rule| rule[:selected] }
+    refute_empty rules
+    assert_equal ids, ids.compact
+    assert_equal titles, titles.compact
+    assert_equal selected, selected.compact
   end
 end

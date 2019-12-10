@@ -24,13 +24,6 @@ module OpenscapParser
         @parsed_xml.xpath("select[@selected='true']/@idref").map(&:text)
     end
 
-    def set_values
-      @set_values ||= @parsed_xml.xpath("set-value") &&
-        @parsed_xml.xpath("set-value").map do |set_value|
-        [set_value['idref'], set_value.text]
-      end.to_h
-    end
-
     def to_h
       { :id => id, :title => title, :description => description }
     end

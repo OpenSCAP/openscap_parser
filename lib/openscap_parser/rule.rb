@@ -54,5 +54,17 @@ module OpenscapParser
     def identifier_node
       @identifier_node ||= parsed_xml.at_xpath('ident')
     end
+
+    def to_h
+      {
+        :id => id,
+        :selected => selected,
+        :severity => severity,
+        :title => title,
+        :description => description,
+        :rationale => rationale,
+        :identifier => rule_identifier.to_h
+      }
+    end
   end
 end

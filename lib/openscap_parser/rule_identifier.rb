@@ -10,5 +10,12 @@ module OpenscapParser
     def system
       @system ||= @parsed_xml && @parsed_xml['system']
     end
+
+    def to_h
+      {
+        :label => label,
+        :system => system
+      }
+    end
   end
 end
