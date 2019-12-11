@@ -115,6 +115,63 @@ class TestResultFileTest < Minitest::Test
         parse_set_values @arf_result_file
       end
     end
+
+    context 'fixes' do
+      test 'should parse fixes for xccdf report' do
+        parse_fixes @test_result_file
+      end
+
+      test 'should parse fixes for arf report' do
+        parse_fixes @arf_result_file
+      end
+
+      test 'should parse multiple fixes for one rule' do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
+        fixes = rule.fixes
+        assert_equal 2, fixes.count
+        assert fixes.map(&:id).all? { |id| id == 'ensure_gpgcheck_globally_activated' }
+        refute_equal fixes.first.system, fixes.last.system
+      end
+
+      test "should parse one sub for fix" do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
+        fix = rule.fixes.find { |fix| !fix.subs.empty? }
+        assert_equal 1, fix.subs.count
+        assert fix.subs.first.id
+        assert fix.subs.first.text
+      end
+
+      test "should parse attributes for fix" do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_enable_selinux_bootloader" }
+        fix = rule.fixes.find { |fx| fx.system == "urn:xccdf:fix:script:sh" }
+        assert_empty fix.subs
+        assert fix.text
+        assert fix.complexity
+        assert fix.disruption
+        assert fix.strategy
+      end
+
+      test "should parse multiple subs for fix" do
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        fix = rule.fixes.find { |fix| !fix.subs.empty? }
+        assert_equal 2, fix.subs.count
+        sub = fix.subs.last
+        assert sub.id
+        assert sub.text
+        assert sub.use
+      end
+    end
+  end
+
+  private
+
+  def parse_fixes(result_file)
+    fixes = result_file.benchmark.rules.flat_map(&:fixes).map(&:to_h)
+    ids = fixes.map { |fix| fix[:id] }
+    systems = fixes.map { |fix| fix[:system] }
+    refute_empty fixes
+    assert_equal ids, ids.compact
+    assert_equal systems, systems.compact
   end
 
   def parse_set_values(result_file)
