@@ -141,19 +141,24 @@ class TestResultFileTest < Minitest::Test
         assert fix.subs.first.text
       end
 
-      test "should parse text for fix" do
+      test "should parse attributes for fix" do
         rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_enable_selinux_bootloader" }
         fix = rule.fixes.find { |fx| fx.system == "urn:xccdf:fix:script:sh" }
         assert_empty fix.subs
         assert fix.text
+        assert fix.complexity
+        assert fix.disruption
+        assert fix.strategy
       end
 
       test "should parse multiple subs for fix" do
         rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
         fix = rule.fixes.find { |fix| !fix.subs.empty? }
         assert_equal 2, fix.subs.count
-        assert fix.subs.last.id
-        assert fix.subs.last.text
+        sub = fix.subs.last
+        assert sub.id
+        assert sub.text
+        assert sub.use
       end
     end
   end

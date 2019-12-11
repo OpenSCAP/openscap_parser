@@ -7,8 +7,12 @@ module OpenscapParser
       @id ||= @parsed_xml['idref']
     end
 
+    def use
+      @use ||= @parsed_xml['use']
+    end
+
     def to_h
-      { :id => id, :text => text }
+      { :id => id, :text => text, :use => use }
     end
   end
 end

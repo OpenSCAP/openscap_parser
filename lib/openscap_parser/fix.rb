@@ -18,11 +18,21 @@ module OpenscapParser
       @complexity ||= @parsed_xml['complexity']
     end
 
+    def disruption
+      @disruption ||= @parsed_xml['disruption']
+    end
+
+    def strategy
+      @strategy ||= @parsed_xml['strategy']
+    end
+
     def to_h
       {
         :id => id,
         :system => system,
         :complexity => complexity,
+        :disruption => disruption,
+        :strategy => strategy,
         :text => text,
         :subs => subs.map(&:to_h)
       }
