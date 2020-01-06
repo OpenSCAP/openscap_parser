@@ -4,7 +4,7 @@ require 'openscap_parser/subs'
 
 module OpenscapParser
   class Fix < XmlNode
-    prepend OpenscapParser::Subs
+    include OpenscapParser::Subs
 
     def id
       @id ||= @parsed_xml['id']
@@ -37,8 +37,7 @@ module OpenscapParser
     end
 
     def map_child_nodes(set_values = [])
-      # override in mixin to properly resolve child nodes
-      @parsed_xml.children
+      map_sub_nodes @parsed_xml.children, set_values
     end
 
     def to_h
@@ -48,7 +47,8 @@ module OpenscapParser
         :complexity => complexity,
         :disruption => disruption,
         :strategy => strategy,
-        :text => text
+        :text => text,
+        :subs => subs.map(&:to_h)
       }
     end
   end
