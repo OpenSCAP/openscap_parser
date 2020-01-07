@@ -26,6 +26,20 @@ module OpenscapParser
       @strategy ||= @parsed_xml['strategy']
     end
 
+    def full_text(set_values)
+      full_text_lines(set_values).join('')
+    end
+
+    def full_text_lines(set_values)
+      map_child_nodes(set_values).map do |text_node|
+        text_node.respond_to?(:text) ? text_node.text : ''
+      end
+    end
+
+    def map_child_nodes(set_values = [])
+      map_sub_nodes @parsed_xml.children, set_values
+    end
+
     def to_h
       {
         :id => id,

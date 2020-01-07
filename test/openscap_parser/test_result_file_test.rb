@@ -160,6 +160,24 @@ class TestResultFileTest < Minitest::Test
         assert sub.text
         assert sub.use
       end
+
+      test "should resolve set-values for subs" do
+        set_values = @arf_result_file.test_result.set_values
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        rule.fixes.first.map_child_nodes(set_values).all? { |node| node.is_a? Nokogiri::XML::Text }
+      end
+
+      test "should parse full fix text lines" do
+        set_values = @arf_result_file.test_result.set_values
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        assert_equal 5, rule.fixes.first.full_text_lines(set_values).count
+      end
+
+      test "should compose full fix" do
+        set_values = @arf_result_file.test_result.set_values
+        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        assert_equal file_fixture('selinux_full_fix.sh').read, rule.fixes.first.full_text(set_values)
+      end
     end
   end
 
