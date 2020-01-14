@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Parse OpenSCAP content}
   spec.description   = %q{This gem is a Ruby interface into SCAP content. It can parse SCAP datastream files (i.e. ssg-rhel7-ds.xml), scan result files output by oscap eval, and tailoring files.}
-  spec.homepage      = 'https://github.com/dLobatog/openscap_parser'
+  spec.homepage      = 'https://github.com/OpenSCAP/openscap_parser'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
