@@ -13,6 +13,7 @@ require 'openscap_parser/xml_file'
 require 'openscap_parser/datastream_file'
 require 'openscap_parser/test_result_file'
 require 'openscap_parser/tailoring_file'
+require 'openscap_parser/oval_report'
 
 require 'date'
 require 'railtie' if defined?(Rails)
