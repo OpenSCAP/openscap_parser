@@ -18,4 +18,18 @@ class OvalReportTest < Minitest::Test
     results = OpenscapParser::OvalReport.new(@invalid_report).definition_results
     assert results.empty?
   end
+
+  test 'should parse definitions' do
+    defs = OpenscapParser::OvalReport.new(@valid_report).definitions
+    refute defs.empty?
+    assert defs.last.id
+    assert defs.last.title
+    assert defs.last.description
+    refute_empty defs.last.references
+  end
+
+  test 'should return no definitions for invalid file' do
+    defs = OpenscapParser::OvalReport.new(@invalid_report).definitions
+    assert defs.empty?
+  end
 end
