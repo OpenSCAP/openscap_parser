@@ -8,6 +8,10 @@ class TestResultFileTest < Minitest::Test
       file_fixture('xccdf_report.xml').read
     )
 
+    @test_result_file2 = OpenscapParser::TestResultFile.new(
+      file_fixture('xccdf_report_with_conflicts_and_requires.xml').read
+    )
+
     @arf_result_file = OpenscapParser::TestResultFile.new(
       file_fixture('arf_report_cs2.xml').read
     )
@@ -25,6 +29,47 @@ class TestResultFileTest < Minitest::Test
     end
 
     context 'profiles' do
+    end
+
+    context 'groups' do
+      test 'group_id' do
+        assert_match(/^xccdf_org.ssgproject.content_group_system/,
+                     @test_result_file2.benchmark.groups.first.id)
+      end
+      test 'group_no_conflicts' do
+        assert_equal([], @test_result_file2.benchmark.groups.first.conflicts)
+      end
+      test 'group_with_conflicts' do
+        assert_equal(["xccdf_org.ssgproject.content_rule_selinux_state",
+                      "xccdf_org.ssgproject.content_group_mcafee_security_software"],
+                     @test_result_file2.benchmark.groups[1].conflicts)
+      end
+      test 'group_no_requires' do
+        assert_equal([], @test_result_file2.benchmark.groups[1].requires)
+      end
+      test 'group_with_requires' do
+        assert_equal(['A', 'B', 'C'], @test_result_file2.benchmark.groups.first.requires)
+      end
+      test 'group_description' do
+        assert_match(/^Contains rules that check correct system settings./,
+                     @test_result_file2.benchmark.groups.first.description)
+      end
+      test 'group_parent_id_benchmark' do
+        assert_match(/^xccdf_org.ssgproject.content_benchmark_RHEL-7/,
+                     @test_result_file2.benchmark.groups.first.parent_id)
+      end
+      test 'group_parent_id_group' do
+        assert_match(/^xccdf_org.ssgproject.content_group_system/,
+                     @test_result_file2.benchmark.groups[1].parent_id)
+      end
+      test 'group_parent_type_with_benchmark_parent' do
+        assert_match(/^Benchmark/,
+                     @test_result_file2.benchmark.groups.first.parent_type)
+      end
+      test 'group_parent_type_with_group_parent' do
+        assert_match(/^Group/,
+                     @test_result_file2.benchmark.groups[1].parent_type)
+      end
     end
 
     context 'rules' do
@@ -59,6 +104,48 @@ class TestResultFileTest < Minitest::Test
         DESC
 
         assert_equal desc, rule.description
+      end
+
+      test 'rule_id' do
+        assert_match(/^xccdf_org.ssgproject.content_rule_prefer_64bit_os2/,
+                     @test_result_file2.benchmark.rules.first.id)
+      end
+      test 'rule_no_conflicts' do
+        assert_equal([], @test_result_file2.benchmark.rules[1].conflicts)
+      end
+      test 'rule_with_conflicts' do
+        assert_equal(["xccdf_org.ssgproject.content_group_system",
+                      "xccdf_org.ssgproject.content_rule_selinux_state"],
+                     @test_result_file2.benchmark.rules.first.conflicts)
+      end
+      test 'rule_no_requires' do
+        assert_equal([], @test_result_file2.benchmark.rules.first.requires)
+      end
+      test 'rule_with_requires' do
+        assert_equal(["xccdf_org.ssgproject.content_rule_package_audit_installed",
+                      "xccdf_org.ssgproject.content_group_integrity",
+                      "xccdf_org.ssgproject.content_group_software-integrity"], 
+                     @test_result_file2.benchmark.rules[1].requires)
+      end
+      test 'rule_description' do
+        assert_match(/^Prefer installation of 64-bit operating systems when the CPU supports it./,
+                     @test_result_file2.benchmark.rules[1].description)
+      end
+      test 'rule_parent_id_benchmark' do
+        assert_match(/^xccdf_org.ssgproject.content_benchmark_RHEL-7/,
+                     @test_result_file2.benchmark.rules.first.parent_id)
+      end
+      test 'rule_parent_id_group' do
+        assert_match(/^xccdf_org.ssgproject.content_group_software/,
+                     @test_result_file2.benchmark.rules[1].parent_id)
+      end
+      test 'rule_parent_type_with_benchmark_parent' do
+        assert_match(/^Benchmark/,
+                     @test_result_file2.benchmark.rules.first.parent_type)
+      end
+      test 'rule_parent_type_with_group_parent' do
+        assert_match(/^Group/,
+                     @test_result_file2.benchmark.rules[1].parent_type)
       end
     end
 
