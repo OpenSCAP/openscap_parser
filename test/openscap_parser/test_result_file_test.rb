@@ -29,6 +29,39 @@ class TestResultFileTest < Minitest::Test
     end
 
     context 'profiles' do
+      test 'profile_id' do
+        assert_match(/^xccdf_org.ssgproject.content_profile_C2S/,
+                     @test_result_file2.benchmark.profiles.first.id)
+      end
+
+      test 'profile_selected_rule_ids' do
+        assert_equal(238, @test_result_file2.benchmark.profiles.first.selected_rule_ids.length)
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.rules_group_crypto")
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.content_group_rule_crypto")
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.contentrule_group_crypto")
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.content_group_rule_group_crypto")
+      end
+
+      test 'profile_selected_group_ids' do
+        assert_equal(["xccdf_org.ssgproject.rules_group_crypto",
+                      "xccdf_org.ssgproject_rules.content_group_crypto",
+                      "xccdf_org.ssgproject.contentrule_group_crypto",
+                      "xccdf_org.ssgproject.content_group_rule_crypto",
+                      "xccdf_org.ssgproject.content_group_rule_group_crypto",
+                      "xccdf_org.ssgproject.content_group_endpoint_rule_security_software",
+                      "xccdf_org.ssgproject.content_group_nfs_configuring_all_machines",
+                      "xccdf_org.ssgproject.content_group_nfs_client_or_server_not_both",
+                      "xccdf_org.ssgproject.content_group_nfs_configure_fixed_ports",
+                      "xccdf_org.ssgproject.content_group_mounting_remote_filesystems"],
+                     @test_result_file2.benchmark.profiles.first.selected_group_ids)
+      end
+
+      test 'profile_selected_entity_ids' do
+        all_selected_ids = @test_result_file2.benchmark.profiles.first.selected_rule_ids +
+                           @test_result_file2.benchmark.profiles.first.selected_group_ids
+        assert_equal(248, @test_result_file2.benchmark.profiles.first.selected_entity_ids.length)
+        assert_equal(all_selected_ids.sort, @test_result_file2.benchmark.profiles.first.selected_entity_ids.sort)
+      end
     end
 
     context 'groups' do
@@ -36,36 +69,45 @@ class TestResultFileTest < Minitest::Test
         assert_match(/^xccdf_org.ssgproject.content_group_system/,
                      @test_result_file2.benchmark.groups.first.id)
       end
+
       test 'group_no_conflicts' do
         assert_equal([], @test_result_file2.benchmark.groups.first.conflicts)
       end
+
       test 'group_with_conflicts' do
         assert_equal(["xccdf_org.ssgproject.content_rule_selinux_state",
                       "xccdf_org.ssgproject.content_group_mcafee_security_software"],
                      @test_result_file2.benchmark.groups[1].conflicts)
       end
+
       test 'group_no_requires' do
         assert_equal([], @test_result_file2.benchmark.groups[1].requires)
       end
+
       test 'group_with_requires' do
         assert_equal(['A', 'B', 'C'], @test_result_file2.benchmark.groups.first.requires)
       end
+
       test 'group_description' do
         assert_match(/^Contains rules that check correct system settings./,
                      @test_result_file2.benchmark.groups.first.description)
       end
+
       test 'group_parent_id_benchmark' do
         assert_match(/^xccdf_org.ssgproject.content_benchmark_RHEL-7/,
                      @test_result_file2.benchmark.groups.first.parent_id)
       end
+
       test 'group_parent_id_group' do
         assert_match(/^xccdf_org.ssgproject.content_group_system/,
                      @test_result_file2.benchmark.groups[1].parent_id)
       end
+
       test 'group_parent_type_with_benchmark_parent' do
         assert_match(/^Benchmark/,
                      @test_result_file2.benchmark.groups.first.parent_type)
       end
+
       test 'group_parent_type_with_group_parent' do
         assert_match(/^Group/,
                      @test_result_file2.benchmark.groups[1].parent_type)
