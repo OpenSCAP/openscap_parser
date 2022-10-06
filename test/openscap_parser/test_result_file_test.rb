@@ -42,25 +42,16 @@ class TestResultFileTest < Minitest::Test
         refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.content_group_rule_group_crypto")
       end
 
-      test 'profile_selected_group_ids' do
-        assert_equal(["xccdf_org.ssgproject.rules_group_crypto",
-                      "xccdf_org.ssgproject_rules.content_group_crypto",
-                      "xccdf_org.ssgproject.contentrule_group_crypto",
-                      "xccdf_org.ssgproject.content_group_rule_crypto",
-                      "xccdf_org.ssgproject.content_group_rule_group_crypto",
-                      "xccdf_org.ssgproject.content_group_endpoint_rule_security_software",
-                      "xccdf_org.ssgproject.content_group_nfs_configuring_all_machines",
-                      "xccdf_org.ssgproject.content_group_nfs_client_or_server_not_both",
-                      "xccdf_org.ssgproject.content_group_nfs_configure_fixed_ports",
-                      "xccdf_org.ssgproject.content_group_mounting_remote_filesystems"],
-                     @test_result_file2.benchmark.profiles.first.selected_group_ids)
+      test 'profile_unselected_group_ids' do
+        assert_equal(186, @test_result_file.benchmark.profiles.first.unselected_group_ids.count)
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_mcafee_security_software")
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_mcafee_hbss_software")
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_certified-vendor")
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_restrictions")
       end
 
       test 'profile_selected_entity_ids' do
-        all_selected_ids = @test_result_file2.benchmark.profiles.first.selected_rule_ids +
-                           @test_result_file2.benchmark.profiles.first.selected_group_ids
         assert_equal(248, @test_result_file2.benchmark.profiles.first.selected_entity_ids.length)
-        assert_equal(all_selected_ids.sort, @test_result_file2.benchmark.profiles.first.selected_entity_ids.sort)
       end
     end
 

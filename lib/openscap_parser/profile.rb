@@ -31,14 +31,14 @@ module OpenscapParser
                                                       /@idref", RegexHandler).map(&:text)
     end
 
-    def selected_group_ids
-      # Look for selected group ids where the idref contains '_group_' that is not preceded by 'rule'
-      @selected_group_ids ||= @parsed_xml.xpath("select[@selected='true']
-                                                       [regex(@idref, '^((?!_rule_).)*?(_group_).*$')]
-                                                       /@idref", RegexHandler) &&
-                              @parsed_xml.xpath("select[@selected='true']
-                                                       [regex(@idref, '^((?!_rule_).)*?(_group_).*$')]
-                                                       /@idref", RegexHandler).map(&:text)
+    def unselected_group_ids
+      # Look for group ids that are not selected where the idref contains '_group_' that is not preceded by 'rule'
+      @unselected_group_ids ||= @parsed_xml.xpath("select[@selected='false']
+                                                         [regex(@idref, '^((?!_rule_).)*?(_group_).*$')]
+                                                         /@idref", RegexHandler) &&
+                                @parsed_xml.xpath("select[@selected='false']
+                                                         [regex(@idref, '^((?!_rule_).)*?(_group_).*$')]
+                                                         /@idref", RegexHandler).map(&:text)
     end
 
     def selected_entity_ids
