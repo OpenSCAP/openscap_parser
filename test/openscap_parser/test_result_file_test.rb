@@ -182,6 +182,36 @@ class TestResultFileTest < Minitest::Test
       end
     end
 
+    context 'value_definitions' do
+      test 'value_description' do
+        assert_match(/^Specify the email address for designated personnel if baseline configurations are changed in an unauthorized manner./,
+                     @test_result_file2.benchmark.value_definitions.first.description)
+      end
+
+      test 'type' do
+        assert_equal("string", @test_result_file2.benchmark.value_definitions[0].type)
+        assert_equal("string", @test_result_file2.benchmark.value_definitions[1].type)
+        assert_equal("number", @test_result_file2.benchmark.value_definitions[4].type)
+      end
+
+      test 'lower bound' do
+        assert_equal(nil, @test_result_file2.benchmark.value_definitions[0].lower_bound)
+        assert_equal("0", @test_result_file2.benchmark.value_definitions[4].lower_bound)
+      end
+
+      test 'upper bound' do
+        assert_equal(nil, @test_result_file2.benchmark.value_definitions[0].upper_bound)
+        assert_equal("40000000", @test_result_file2.benchmark.value_definitions[4].upper_bound)
+      end
+
+      test 'default value' do
+        assert_equal("51882M", @test_result_file2.benchmark.value_definitions[0].default_value)
+        assert_equal("512M", @test_result_file2.benchmark.value_definitions[1].default_value)
+        assert_equal("3h", @test_result_file2.benchmark.value_definitions[2].default_value)
+        assert_equal("DEFAULT", @test_result_file2.benchmark.value_definitions[3].default_value)
+      end
+    end
+
     context 'rule_references' do
       test 'rule references' do
         rule = @test_result_file.benchmark.rules.find do |r|
