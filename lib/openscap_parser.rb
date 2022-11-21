@@ -7,6 +7,7 @@ require 'openscap_parser/test_results'
 require 'openscap_parser/profiles'
 require 'openscap_parser/rules'
 require 'openscap_parser/groups'
+require 'openscap_parser/value_definitions'
 require 'openscap_parser/rule_results'
 require 'openscap_parser/tailorings'
 
