@@ -10,5 +10,12 @@ module OpenscapParser
     def label
       @label ||= @parsed_xml && @parsed_xml.text
     end
+
+    def to_h
+      {
+        href: href,
+        label: label
+      }
+    end
   end
 end
