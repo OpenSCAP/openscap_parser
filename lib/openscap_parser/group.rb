@@ -48,6 +48,10 @@ module OpenscapParser
       @parent_id = parsed_xml.xpath('../@id').to_s
     end
 
+    def parent_ids
+      @parent_ids = parsed_xml.xpath('ancestor::Group/@id').map(&:value)
+    end
+
     def parent_type
       if parsed_xml.xpath("name(..)='Group'")
         @parent_type = 'Group'
