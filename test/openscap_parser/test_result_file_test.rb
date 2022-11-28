@@ -180,6 +180,13 @@ class TestResultFileTest < Minitest::Test
         assert_match(/^Group/,
                      @test_result_file2.benchmark.rules[1].parent_type)
       end
+
+      test 'values' do
+        rule = @test_result_file2.benchmark.rules.select { |r| r.id == "xccdf_org.ssgproject.content_rule_accounts_password_pam_pwhistory_remember_password_auth" }
+        assert_equal(["xccdf_org.ssgproject.content_value_var_password_pam_remember_control_flag", "xccdf_org.ssgproject.content_value_var_password_pam_remember"],
+                     rule[0].values)
+        assert_equal([], @test_result_file2.benchmark.rules[1].values)
+      end
     end
 
     context 'value_definitions' do

@@ -83,6 +83,10 @@ module OpenscapParser
       end
     end
 
+    def values
+      parsed_xml.xpath("check/check-export").map { |r| r.at_xpath('@value-id')&.text }
+    end
+
     def to_h
       {
         :id => id,
@@ -95,7 +99,8 @@ module OpenscapParser
         :rationale => rationale,
         :identifier => rule_identifier.to_h,
         :parent_id => parent_id,
-        :parent_type => parent_type
+        :parent_type => parent_type,
+        :values => values
       }
     end
   end
