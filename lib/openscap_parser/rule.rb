@@ -63,7 +63,7 @@ module OpenscapParser
     end
 
     def rule_identifier
-      @identifier ||= RuleIdentifier.new(parsed_xml: identifier_node)
+      @identifier ||= identifier_node && RuleIdentifier.new(parsed_xml: identifier_node)
     end
     alias :identifier :rule_identifier
 
