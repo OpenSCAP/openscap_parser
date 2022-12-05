@@ -53,10 +53,12 @@ module OpenscapParser
     end
 
     def to_h
-      { :id => id,
+      {
+        :id => id,
         :title => title,
         :description => description,
-        :refined_values => refined_values }
+        :refined_values => refined_values
+      }
     end
   end
 end

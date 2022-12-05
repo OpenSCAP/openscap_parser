@@ -53,6 +53,25 @@ class TestResultFileTest < Minitest::Test
       test 'profile_selected_entity_ids' do
         assert_equal(248, @test_result_file2.benchmark.profiles.first.selected_entity_ids.length)
       end
+
+      test 'profile_refined_values' do
+        assert_equal({"xccdf_org.ssgproject.content_value_var_selinux_state"=>"enforcing",
+                      "xccdf_org.ssgproject.content_value_var_selinux_policy_name"=>"targeted",
+                      "xccdf_org.ssgproject.content_value_login_banner_text"=>"usgcb_default",
+                      "xccdf_org.ssgproject.content_value_var_auditd_max_log_file"=>"6",
+                      "xccdf_org.ssgproject.content_value_var_auditd_action_mail_acct"=>"root",
+                      "xccdf_org.ssgproject.content_value_var_auditd_admin_space_left_action"=>"single",
+                      "xccdf_org.ssgproject.content_value_var_sshd_set_keepalive"=>"0",
+                      "xccdf_org.ssgproject.content_value_var_password_pam_minlen"=>"14",
+                      "xccdf_org.ssgproject.content_value_var_accounts_passwords_pam_faillock_unlock_time"=>"900",
+                      "xccdf_org.ssgproject.content_value_var_accounts_passwords_pam_faillock_deny"=>"5",
+                      "xccdf_org.ssgproject.content_value_var_password_pam_unix_remember"=>"5",
+                      "xccdf_org.ssgproject.content_value_var_accounts_maximum_age_login_defs"=>"90",
+                      "xccdf_org.ssgproject.content_value_var_accounts_minimum_age_login_defs"=>"7",
+                      "xccdf_org.ssgproject.content_value_var_accounts_password_warn_age_login_defs"=>"7",
+                      "xccdf_org.ssgproject.content_value_var_account_disable_post_pw_expiration"=>"30"},
+        @test_result_file2.benchmark.profiles.first.refined_values)
+      end
     end
 
     context 'groups' do
@@ -189,33 +208,40 @@ class TestResultFileTest < Minitest::Test
       end
     end
 
-    context 'value_definitions' do
+    context 'values' do
       test 'value_description' do
         assert_match(/^Specify the email address for designated personnel if baseline configurations are changed in an unauthorized manner./,
-                     @test_result_file2.benchmark.value_definitions.first.description)
+                     @test_result_file2.benchmark.values.first.description)
       end
 
       test 'type' do
-        assert_equal("string", @test_result_file2.benchmark.value_definitions[0].type)
-        assert_equal("string", @test_result_file2.benchmark.value_definitions[1].type)
-        assert_equal("number", @test_result_file2.benchmark.value_definitions[4].type)
+        assert_equal("string", @test_result_file2.benchmark.values[0].type)
+        assert_equal("string", @test_result_file2.benchmark.values[1].type)
+        assert_equal("number", @test_result_file2.benchmark.values[4].type)
       end
 
       test 'lower bound' do
-        assert_equal(nil, @test_result_file2.benchmark.value_definitions[0].lower_bound)
-        assert_equal("0", @test_result_file2.benchmark.value_definitions[4].lower_bound)
+        assert_equal(nil, @test_result_file2.benchmark.values[0].lower_bound)
+        assert_equal('0', @test_result_file2.benchmark.values[4].lower_bound)
+        assert_equal('1', @test_result_file2.benchmark.values[4].lower_bound('1_day'))
       end
 
       test 'upper bound' do
-        assert_equal(nil, @test_result_file2.benchmark.value_definitions[0].upper_bound)
-        assert_equal("40000000", @test_result_file2.benchmark.value_definitions[4].upper_bound)
+        assert_equal(nil, @test_result_file2.benchmark.values[0].upper_bound)
+        assert_equal('40000000', @test_result_file2.benchmark.values[4].upper_bound)
+        assert_equal('70000000', @test_result_file2.benchmark.values[4].upper_bound('1_day'))
       end
 
-      test 'default value' do
-        assert_equal("51882M", @test_result_file2.benchmark.value_definitions[0].default_value)
-        assert_equal("512M", @test_result_file2.benchmark.value_definitions[1].default_value)
-        assert_equal("3h", @test_result_file2.benchmark.value_definitions[2].default_value)
-        assert_equal("DEFAULT", @test_result_file2.benchmark.value_definitions[3].default_value)
+      test 'value' do
+        assert_equal("51882M", @test_result_file2.benchmark.values[0].value)
+        assert_equal("512M", @test_result_file2.benchmark.values[1].value)
+        assert_equal("3h", @test_result_file2.benchmark.values[2].value)
+        assert_equal("DEFAULT", @test_result_file2.benchmark.values[3].value)
+        assert_equal("212M", @test_result_file2.benchmark.values[0].value('512M'))
+        assert_equal('1G', @test_result_file2.benchmark.values[1].value('1G'))
+        assert_equal("1h", @test_result_file2.benchmark.values[2].value('1hour'))
+        assert_equal("3h", @test_result_file2.benchmark.values[2].value('3hour'))
+        assert_equal("DEFAULT2", @test_result_file2.benchmark.values[3].value('default_policy'))
       end
     end
 
