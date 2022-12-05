@@ -46,8 +46,17 @@ module OpenscapParser
         @parsed_xml.xpath("select[@selected='true']/@idref").map(&:text)
     end
 
+    def refined_values
+      @refined_values ||= @parsed_xml.xpath("refine-value").each_with_object({}) do |element, rv|
+        rv[element.at_xpath('@idref').text] = element.at_xpath('@selector').text
+      end
+    end
+
     def to_h
-      { :id => id, :title => title, :description => description }
+      { :id => id,
+        :title => title,
+        :description => description,
+        :refined_values => refined_values }
     end
   end
 end
