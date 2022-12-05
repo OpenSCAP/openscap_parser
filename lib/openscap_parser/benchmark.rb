@@ -6,7 +6,7 @@ require 'openscap_parser/rules'
 require 'openscap_parser/profiles'
 require 'openscap_parser/rule_references'
 require 'openscap_parser/groups'
-require 'openscap_parser/value_definitions'
+require 'openscap_parser/values'
 
 # Mimics openscap-ruby Benchmark interface
 module OpenscapParser
@@ -16,7 +16,7 @@ module OpenscapParser
     include OpenscapParser::RuleReferences
     include OpenscapParser::Profiles
     include OpenscapParser::Groups
-    include OpenscapParser::ValueDefinitions
+    include OpenscapParser::Values
 
     def id
       @id ||= @parsed_xml['id']
