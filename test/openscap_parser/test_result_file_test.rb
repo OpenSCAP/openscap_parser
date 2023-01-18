@@ -72,6 +72,32 @@ class TestResultFileTest < Minitest::Test
                       "xccdf_org.ssgproject.content_value_var_account_disable_post_pw_expiration"=>"30"},
         @test_result_file2.benchmark.profiles.first.refined_values)
       end
+
+      test 'profile_refined_rule_severity' do
+        profile = @test_result_file2.benchmark.profiles.find do |profile|
+                     profile.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
+                  end
+        assert_equal({"xccdf_org.ssgproject.content_rule_sssd_ldap_start_tls"=>"medium",
+                      "xccdf_org.ssgproject.content_rule_prefer_64bit_os2"=>"high"},
+        profile.refined_rule_severity)
+      end
+
+      test 'profile_refined_rule_role' do
+        profile = @test_result_file2.benchmark.profiles.find do |profile|
+                     profile.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
+                  end
+        assert_equal({"xccdf_org.ssgproject.content_rule_sssd_ldap_start_tls"=>"full",
+                      "xccdf_org.ssgproject.content_rule_prefer_64bit_os2"=>"full"},
+        profile.refined_rule_role)
+      end
+
+      test 'profile_refined_rule_weight' do
+        profile = @test_result_file2.benchmark.profiles.find do |profile|
+                     profile.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
+                  end
+        assert_equal({"xccdf_org.ssgproject.content_rule_prefer_64bit_os2"=>"10"},
+        profile.refined_rule_weight)
+      end
     end
 
     context 'groups' do

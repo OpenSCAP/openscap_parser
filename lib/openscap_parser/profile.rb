@@ -52,12 +52,33 @@ module OpenscapParser
       end
     end
 
+    def refined_rules(attribute)
+      @refined_rules ||= @parsed_xml.xpath("refine-rule[@#{attribute}]").each_with_object({}) do |element, rr|
+        rr[element.at_xpath('@idref').text] = element.at_xpath("@#{attribute}")&.text
+      end
+    end
+
+    def refined_rule_severity
+      refined_rules('severity')
+    end
+
+    def refined_rule_role
+      refined_rules('role')
+    end
+
+    def refined_rule_weight
+      refined_rules('weight')
+    end
+
     def to_h
       {
         :id => id,
         :title => title,
         :description => description,
-        :refined_values => refined_values
+        :refined_values => refined_values,
+        :refined_rule_severity => refined_rule_severity,
+        :refined_rule_role => refined_rule_role,
+        :refined_rule_weight => refined_rule_weight
       }
     end
   end
