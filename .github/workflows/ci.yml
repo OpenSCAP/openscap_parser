@@ -32,6 +32,6 @@ jobs:
       with:
         bundler-cache: true
     - name: Run unit tests
-      run: bin/rake test
+      run: bundle exec rake test
     - name: Upload code coverage
       uses: codecov/codecov-action@v2
