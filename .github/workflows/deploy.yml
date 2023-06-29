@@ -1,0 +1,25 @@
+name: Release
+on:
+  push:
+    branches:
+      - "master"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y ruby-bundler
+          bundle install
+      - name: Configure git
+        run: |
+          git config user.name 'Update-a-Bot'
+          git config user.email 'insights@redhat.com'
+      - name: Publish gem
+        run: git diff --name-only HEAD~1 HEAD | grep lib/openscap_parser/version.rb && bundle exec rake release || echo "There is nothing to release"
+        env:
+          GEM_HOST_API_KEY: "${{secrets.GEM_HOST_API_KEY}}"
