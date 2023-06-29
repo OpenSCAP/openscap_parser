@@ -6,6 +6,12 @@ require "minitest/autorun"
 require 'shoulda-context'
 require 'mocha/minitest'
 
+require "simplecov"
+SimpleCov.start
+
+require 'simplecov-cobertura'
+SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+
 def test(name, &block)
   test_name = "test_#{name.gsub(/\s+/, '_')}".to_sym
   defined = method_defined? test_name
