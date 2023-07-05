@@ -24,15 +24,16 @@ module OpenscapParser
 
       unless cache
         element_name = type.to_s.sub('_', '-')
+
         cache = parsed_xml.xpath(element_name).each_with_object({}) do |element, elements|
-          elements[element.at_xpath('@selector')&.text.presence] = element&.text
+          elements[element.at_xpath('@selector')&.text] = element&.text
         end
         instance_variable_set("@#{type}", cache)
       end
 
       return cache[selector] if selector
 
-      cache[nil] || cache.values.first
+      cache[nil] || cache[''] || cache.values.first
     end
 
     def upper_bound(selector = nil)
