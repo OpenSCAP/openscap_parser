@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module OpenscapParser
+  # A class for parsing RuleResult information
   class RuleResult < XmlNode
     def id
       @id ||= parsed_xml['idref']
@@ -19,19 +20,17 @@ module OpenscapParser
     end
 
     def result
-      @result ||= parsed_xml.at_xpath('result') &&
-        parsed_xml.at_xpath('result').text || ''
+      @result ||= parsed_xml.at_xpath('result')&.text || ''
     end
 
     def to_h
       {
-        :id => id,
-        :time => time,
-        :severity => severity,
-        :weight => weight,
-        :result => result
+        id:,
+        time:,
+        severity:,
+        weight:,
+        result:
       }
     end
   end
 end
-

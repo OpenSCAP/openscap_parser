@@ -13,7 +13,7 @@ module OpenscapParser
           end
         end
 
-        def value_nodes(xpath = ".//Value")
+        def value_nodes(xpath = './/Value')
           xpath_nodes(xpath)
         end
       end

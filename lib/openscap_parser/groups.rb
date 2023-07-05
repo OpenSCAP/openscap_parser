@@ -3,7 +3,7 @@
 require 'openscap_parser/group'
 
 module OpenscapParser
-  # Methods related to finding and saving rule references
+  # Methods related to finding and saving Groups
   module Groups
     def self.included(base)
       base.class_eval do

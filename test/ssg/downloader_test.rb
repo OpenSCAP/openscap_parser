@@ -10,8 +10,8 @@ module Ssg
         FILE = 'scap-security-guide-0.0.0.zip'
         uri = URI("https://example.com/#{FILE}")
         downloader = Downloader.new
-        downloader.expects(:datastream_uri).
-          at_least_once.returns(uri)
+        downloader.expects(:datastream_uri)
+                  .at_least_once.returns(uri)
         downloader.expects(:get_chunked).with uri
 
         assert_equal FILE, downloader.fetch_datastream_file

@@ -21,6 +21,22 @@ Metrics/BlockLength:
   Exclude:
     - 'test/**/*'
     - 'spec/**/*'
+    - 'openscap_parser.gemspec'
+
+Metrics/MethodLength:
+  AllowedMethods: ['included']
+
+Metrics/AbcSize:
+  AllowedMethods: ['included']
+
+Metrics/CyclomaticComplexity:
+  AllowedMethods: ['included']
+
+Metrics/PerceivedComplexity:
+  AllowedMethods: ['included']
+
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
 
 Layout/LineEndStringConcatenationIndentation:
   Enabled: false

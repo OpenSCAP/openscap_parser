@@ -2,9 +2,10 @@
 
 # RuleIdentifier interface as an object
 module OpenscapParser
+  # A class for parsing RuleIdentifier information
   class RuleIdentifier < XmlNode
     def label
-      @label ||= @parsed_xml && @parsed_xml.text
+      @label ||= @parsed_xml&.text
     end
 
     def system
@@ -13,8 +14,8 @@ module OpenscapParser
 
     def to_h
       {
-        :label => label,
-        :system => system
+        label:,
+        system:
       }
     end
   end

@@ -7,19 +7,19 @@ class DatastreamFileTest < MiniTest::Test
     should 'be able to parse profiles' do
       parser = create_parser('ssg-rhel7-ds.xml')
       profile_ref_ids = [
-        "xccdf_org.ssgproject.content_profile_standard",
-        "xccdf_org.ssgproject.content_profile_nist-800-171-cui",
-        "xccdf_org.ssgproject.content_profile_rht-ccp",
-        "xccdf_org.ssgproject.content_profile_C2S",
-        "xccdf_org.ssgproject.content_profile_cjis",
-        "xccdf_org.ssgproject.content_profile_hipaa",
-        "xccdf_org.ssgproject.content_profile_ospp",
-        "xccdf_org.ssgproject.content_profile_ospp42",
-        "xccdf_org.ssgproject.content_profile_pci-dss",
-        "xccdf_org.ssgproject.content_profile_stig-rhel7-disa",
-        "xccdf_org.ssgproject.content_profile_rhelh-vpp"
+        'xccdf_org.ssgproject.content_profile_standard',
+        'xccdf_org.ssgproject.content_profile_nist-800-171-cui',
+        'xccdf_org.ssgproject.content_profile_rht-ccp',
+        'xccdf_org.ssgproject.content_profile_C2S',
+        'xccdf_org.ssgproject.content_profile_cjis',
+        'xccdf_org.ssgproject.content_profile_hipaa',
+        'xccdf_org.ssgproject.content_profile_ospp',
+        'xccdf_org.ssgproject.content_profile_ospp42',
+        'xccdf_org.ssgproject.content_profile_pci-dss',
+        'xccdf_org.ssgproject.content_profile_stig-rhel7-disa',
+        'xccdf_org.ssgproject.content_profile_rhelh-vpp'
       ]
-      assert_equal(profile_ref_ids, parser.benchmark.profiles.map { |profile| profile.id })
+      assert_equal(profile_ref_ids, parser.benchmark.profiles.map(&:id))
     end
   end
 

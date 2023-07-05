@@ -25,7 +25,7 @@ class TestResultFileTest < Minitest::Test
 
     test 'be able to parse it' do
       assert_equal 'xccdf_org.ssgproject.content_profile_standard',
-        @test_result_file.benchmark.profiles.first.id
+                   @test_result_file.benchmark.profiles.first.id
     end
 
     context 'profiles' do
@@ -36,18 +36,26 @@ class TestResultFileTest < Minitest::Test
 
       test 'profile_selected_rule_ids' do
         assert_equal(238, @test_result_file2.benchmark.profiles.first.selected_rule_ids.length)
-        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.rules_group_crypto")
-        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.content_group_rule_crypto")
-        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.contentrule_group_crypto")
-        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids, "xccdf_org.ssgproject.content_group_rule_group_crypto")
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids,
+                        'xccdf_org.ssgproject.rules_group_crypto')
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids,
+                        'xccdf_org.ssgproject.content_group_rule_crypto')
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids,
+                        'xccdf_org.ssgproject.contentrule_group_crypto')
+        refute_includes(@test_result_file2.benchmark.profiles.first.selected_rule_ids,
+                        'xccdf_org.ssgproject.content_group_rule_group_crypto')
       end
 
       test 'profile_unselected_group_ids' do
         assert_equal(186, @test_result_file.benchmark.profiles.first.unselected_group_ids.count)
-        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_mcafee_security_software")
-        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_mcafee_hbss_software")
-        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_certified-vendor")
-        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids, "xccdf_org.ssgproject.content_group_restrictions")
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids,
+                        'xccdf_org.ssgproject.content_group_mcafee_security_software')
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids,
+                        'xccdf_org.ssgproject.content_group_mcafee_hbss_software')
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids,
+                        'xccdf_org.ssgproject.content_group_certified-vendor')
+        assert_includes(@test_result_file.benchmark.profiles.first.unselected_group_ids,
+                        'xccdf_org.ssgproject.content_group_restrictions')
       end
 
       test 'profile_selected_entity_ids' do
@@ -55,48 +63,48 @@ class TestResultFileTest < Minitest::Test
       end
 
       test 'profile_refined_values' do
-        assert_equal({"xccdf_org.ssgproject.content_value_var_selinux_state"=>"enforcing",
-                      "xccdf_org.ssgproject.content_value_var_selinux_policy_name"=>"targeted",
-                      "xccdf_org.ssgproject.content_value_login_banner_text"=>"usgcb_default",
-                      "xccdf_org.ssgproject.content_value_var_auditd_max_log_file"=>"6",
-                      "xccdf_org.ssgproject.content_value_var_auditd_action_mail_acct"=>"root",
-                      "xccdf_org.ssgproject.content_value_var_auditd_admin_space_left_action"=>"single",
-                      "xccdf_org.ssgproject.content_value_var_sshd_set_keepalive"=>"0",
-                      "xccdf_org.ssgproject.content_value_var_password_pam_minlen"=>"14",
-                      "xccdf_org.ssgproject.content_value_var_accounts_passwords_pam_faillock_unlock_time"=>"900",
-                      "xccdf_org.ssgproject.content_value_var_accounts_passwords_pam_faillock_deny"=>"5",
-                      "xccdf_org.ssgproject.content_value_var_password_pam_unix_remember"=>"5",
-                      "xccdf_org.ssgproject.content_value_var_accounts_maximum_age_login_defs"=>"90",
-                      "xccdf_org.ssgproject.content_value_var_accounts_minimum_age_login_defs"=>"7",
-                      "xccdf_org.ssgproject.content_value_var_accounts_password_warn_age_login_defs"=>"7",
-                      "xccdf_org.ssgproject.content_value_var_account_disable_post_pw_expiration"=>"30"},
-        @test_result_file2.benchmark.profiles.first.refined_values)
+        assert_equal({ 'xccdf_org.ssgproject.content_value_var_selinux_state' => 'enforcing',
+                       'xccdf_org.ssgproject.content_value_var_selinux_policy_name' => 'targeted',
+                       'xccdf_org.ssgproject.content_value_login_banner_text' => 'usgcb_default',
+                       'xccdf_org.ssgproject.content_value_var_auditd_max_log_file' => '6',
+                       'xccdf_org.ssgproject.content_value_var_auditd_action_mail_acct' => 'root',
+                       'xccdf_org.ssgproject.content_value_var_auditd_admin_space_left_action' => 'single',
+                       'xccdf_org.ssgproject.content_value_var_sshd_set_keepalive' => '0',
+                       'xccdf_org.ssgproject.content_value_var_password_pam_minlen' => '14',
+                       'xccdf_org.ssgproject.content_value_var_accounts_passwords_pam_faillock_unlock_time' => '900',
+                       'xccdf_org.ssgproject.content_value_var_accounts_passwords_pam_faillock_deny' => '5',
+                       'xccdf_org.ssgproject.content_value_var_password_pam_unix_remember' => '5',
+                       'xccdf_org.ssgproject.content_value_var_accounts_maximum_age_login_defs' => '90',
+                       'xccdf_org.ssgproject.content_value_var_accounts_minimum_age_login_defs' => '7',
+                       'xccdf_org.ssgproject.content_value_var_accounts_password_warn_age_login_defs' => '7',
+                       'xccdf_org.ssgproject.content_value_var_account_disable_post_pw_expiration' => '30' },
+                     @test_result_file2.benchmark.profiles.first.refined_values)
       end
 
       test 'profile_refined_rule_severity' do
-        profile = @test_result_file2.benchmark.profiles.find do |profile|
-                     profile.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
-                  end
-        assert_equal({"xccdf_org.ssgproject.content_rule_sssd_ldap_start_tls"=>"medium",
-                      "xccdf_org.ssgproject.content_rule_prefer_64bit_os2"=>"high"},
-        profile.refined_rule_severity)
+        profile = @test_result_file2.benchmark.profiles.find do |p|
+          p.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
+        end
+        assert_equal({ 'xccdf_org.ssgproject.content_rule_sssd_ldap_start_tls' => 'medium',
+                       'xccdf_org.ssgproject.content_rule_prefer_64bit_os2' => 'high' },
+                     profile.refined_rule_severity)
       end
 
       test 'profile_refined_rule_role' do
-        profile = @test_result_file2.benchmark.profiles.find do |profile|
-                     profile.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
-                  end
-        assert_equal({"xccdf_org.ssgproject.content_rule_sssd_ldap_start_tls"=>"full",
-                      "xccdf_org.ssgproject.content_rule_prefer_64bit_os2"=>"full"},
-        profile.refined_rule_role)
+        profile = @test_result_file2.benchmark.profiles.find do |p|
+          p.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
+        end
+        assert_equal({ 'xccdf_org.ssgproject.content_rule_sssd_ldap_start_tls' => 'full',
+                       'xccdf_org.ssgproject.content_rule_prefer_64bit_os2' => 'full' },
+                     profile.refined_rule_role)
       end
 
       test 'profile_refined_rule_weight' do
-        profile = @test_result_file2.benchmark.profiles.find do |profile|
-                     profile.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
-                  end
-        assert_equal({"xccdf_org.ssgproject.content_rule_prefer_64bit_os2"=>"10"},
-        profile.refined_rule_weight)
+        profile = @test_result_file2.benchmark.profiles.find do |p|
+          p.id == 'xccdf_org.ssgproject.content_profile_stig_gui'
+        end
+        assert_equal({ 'xccdf_org.ssgproject.content_rule_prefer_64bit_os2' => '10' },
+                     profile.refined_rule_weight)
       end
     end
 
@@ -111,8 +119,8 @@ class TestResultFileTest < Minitest::Test
       end
 
       test 'group_with_conflicts' do
-        assert_equal(["xccdf_org.ssgproject.content_rule_selinux_state",
-                      "xccdf_org.ssgproject.content_group_mcafee_security_software"],
+        assert_equal(['xccdf_org.ssgproject.content_rule_selinux_state',
+                      'xccdf_org.ssgproject.content_group_mcafee_security_software'],
                      @test_result_file2.benchmark.groups[1].conflicts)
       end
 
@@ -121,7 +129,7 @@ class TestResultFileTest < Minitest::Test
       end
 
       test 'group_with_requires' do
-        assert_equal(['A', 'B', 'C'], @test_result_file2.benchmark.groups.first.requires)
+        assert_equal(%w[A B C], @test_result_file2.benchmark.groups.first.requires)
       end
 
       test 'group_description' do
@@ -167,18 +175,18 @@ class TestResultFileTest < Minitest::Test
       end
 
       test 'removes newlines from rule description' do
-        rule = @test_result_file.benchmark.rules.find do |rule|
-          rule.id == 'xccdf_org.ssgproject.content_rule_service_atd_disabled'
+        rule = @test_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_service_atd_disabled'
         end
 
         desc = <<~DESC.gsub("\n", ' ').strip
-        The at and batch commands can be used to
-        schedule tasks that are meant to be executed only once. This allows delayed
-        execution in a manner similar to cron, except that it is not
-        recurring. The daemon atd keeps track of tasks scheduled via
-        at and batch, and executes them at the specified time.
-        The atd service can be disabled with the following command:
-        $ sudo systemctl disable atd.service
+          The at and batch commands can be used to
+          schedule tasks that are meant to be executed only once. This allows delayed
+          execution in a manner similar to cron, except that it is not
+          recurring. The daemon atd keeps track of tasks scheduled via
+          at and batch, and executes them at the specified time.
+          The atd service can be disabled with the following command:
+          $ sudo systemctl disable atd.service
         DESC
 
         assert_equal desc, rule.description
@@ -192,17 +200,17 @@ class TestResultFileTest < Minitest::Test
         assert_equal([], @test_result_file2.benchmark.rules[1].conflicts)
       end
       test 'rule_with_conflicts' do
-        assert_equal(["xccdf_org.ssgproject.content_group_system",
-                      "xccdf_org.ssgproject.content_rule_selinux_state"],
+        assert_equal(['xccdf_org.ssgproject.content_group_system',
+                      'xccdf_org.ssgproject.content_rule_selinux_state'],
                      @test_result_file2.benchmark.rules.first.conflicts)
       end
       test 'rule_no_requires' do
         assert_equal([], @test_result_file2.benchmark.rules.first.requires)
       end
       test 'rule_with_requires' do
-        assert_equal(["xccdf_org.ssgproject.content_rule_package_audit_installed",
-                      "xccdf_org.ssgproject.content_group_integrity",
-                      "xccdf_org.ssgproject.content_group_software-integrity"], 
+        assert_equal(['xccdf_org.ssgproject.content_rule_package_audit_installed',
+                      'xccdf_org.ssgproject.content_group_integrity',
+                      'xccdf_org.ssgproject.content_group_software-integrity'],
                      @test_result_file2.benchmark.rules[1].requires)
       end
       test 'rule_description' do
@@ -227,8 +235,11 @@ class TestResultFileTest < Minitest::Test
       end
 
       test 'values' do
-        rule = @test_result_file2.benchmark.rules.select { |r| r.id == "xccdf_org.ssgproject.content_rule_accounts_password_pam_pwhistory_remember_password_auth" }
-        assert_equal(["xccdf_org.ssgproject.content_value_var_password_pam_remember_control_flag", "xccdf_org.ssgproject.content_value_var_password_pam_remember"],
+        rule = @test_result_file2.benchmark.rules.select do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_accounts_password_pam_pwhistory_remember_password_auth'
+        end
+        assert_equal(['xccdf_org.ssgproject.content_value_var_password_pam_remember_control_flag',
+                      'xccdf_org.ssgproject.content_value_var_password_pam_remember'],
                      rule[0].values)
         assert_equal([], @test_result_file2.benchmark.rules[1].values)
       end
@@ -236,14 +247,15 @@ class TestResultFileTest < Minitest::Test
 
     context 'values' do
       test 'value_description' do
-        assert_match(/^Specify the email address for designated personnel if baseline configurations are changed in an unauthorized manner./,
+        assert_equal('Specify the email address for designated personnel if ' \
+          'baseline configurations are changed in an unauthorized manner.',
                      @test_result_file2.benchmark.values.first.description)
       end
 
       test 'type' do
-        assert_equal("string", @test_result_file2.benchmark.values[0].type)
-        assert_equal("string", @test_result_file2.benchmark.values[1].type)
-        assert_equal("number", @test_result_file2.benchmark.values[4].type)
+        assert_equal('string', @test_result_file2.benchmark.values[0].type)
+        assert_equal('string', @test_result_file2.benchmark.values[1].type)
+        assert_equal('number', @test_result_file2.benchmark.values[4].type)
       end
 
       test 'lower bound' do
@@ -259,15 +271,15 @@ class TestResultFileTest < Minitest::Test
       end
 
       test 'value' do
-        assert_equal("51882M", @test_result_file2.benchmark.values[0].value)
-        assert_equal("512M", @test_result_file2.benchmark.values[1].value)
-        assert_equal("3h", @test_result_file2.benchmark.values[2].value)
-        assert_equal("DEFAULT", @test_result_file2.benchmark.values[3].value)
-        assert_equal("212M", @test_result_file2.benchmark.values[0].value('512M'))
+        assert_equal('51882M', @test_result_file2.benchmark.values[0].value)
+        assert_equal('512M', @test_result_file2.benchmark.values[1].value)
+        assert_equal('3h', @test_result_file2.benchmark.values[2].value)
+        assert_equal('DEFAULT', @test_result_file2.benchmark.values[3].value)
+        assert_equal('212M', @test_result_file2.benchmark.values[0].value('512M'))
         assert_equal('1G', @test_result_file2.benchmark.values[1].value('1G'))
-        assert_equal("1h", @test_result_file2.benchmark.values[2].value('1hour'))
-        assert_equal("3h", @test_result_file2.benchmark.values[2].value('3hour'))
-        assert_equal("DEFAULT2", @test_result_file2.benchmark.values[3].value('default_policy'))
+        assert_equal('1h', @test_result_file2.benchmark.values[2].value('1hour'))
+        assert_equal('3h', @test_result_file2.benchmark.values[2].value('3hour'))
+        assert_equal('DEFAULT2', @test_result_file2.benchmark.values[3].value('default_policy'))
       end
     end
 
@@ -278,12 +290,12 @@ class TestResultFileTest < Minitest::Test
         end
 
         references = [
-          ["http://iase.disa.mil/stigs/cci/Pages/index.aspx", "CCI-000381"],
-          ['http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.'\
-           '800-53r4.pdf', "CM-7"]
+          ['http://iase.disa.mil/stigs/cci/Pages/index.aspx', 'CCI-000381'],
+          ['http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.' \
+           '800-53r4.pdf', 'CM-7']
         ]
 
-        assert_equal references, rule.references.map { |rr| [rr.href, rr.label] }
+        assert_equal(references, rule.references.map { |rr| [rr.href, rr.label] })
       end
     end
   end
@@ -291,7 +303,7 @@ class TestResultFileTest < Minitest::Test
   context 'test result' do
     test 'report_host' do
       assert_match @test_result_file.test_result.host,
-        'lenovolobato.lobatolan.home'
+                   'lenovolobato.lobatolan.home'
     end
 
     test 'score can be parsed' do
@@ -301,7 +313,7 @@ class TestResultFileTest < Minitest::Test
     context 'profiles' do
       test 'test_result profile_id' do
         assert_equal 'xccdf_org.ssgproject.content_profile_standard',
-          @test_result_file.test_result.profile_id
+                     @test_result_file.test_result.profile_id
       end
     end
 
@@ -335,24 +347,30 @@ class TestResultFileTest < Minitest::Test
       end
 
       test 'should parse multiple fixes for one rule' do
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
+        rule = @arf_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated'
+        end
         fixes = rule.fixes
         assert_equal 2, fixes.count
-        assert fixes.map(&:id).all? { |id| id == 'ensure_gpgcheck_globally_activated' }
+        assert(fixes.map(&:id).all? { |id| id == 'ensure_gpgcheck_globally_activated' })
         refute_equal fixes.first.system, fixes.last.system
       end
 
-      test "should parse one sub for fix" do
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" }
-        fix = rule.fixes.find { |fix| !fix.subs.empty? }
+      test 'should parse one sub for fix' do
+        rule = @arf_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated'
+        end
+        fix = rule.fixes.find { |f| !f.subs.empty? }
         assert_equal 1, fix.subs.count
         assert fix.subs.first.id
         assert fix.subs.first.text
       end
 
-      test "should parse attributes for fix" do
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_enable_selinux_bootloader" }
-        fix = rule.fixes.find { |fx| fx.system == "urn:xccdf:fix:script:sh" }
+      test 'should parse attributes for fix' do
+        rule = @arf_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_enable_selinux_bootloader'
+        end
+        fix = rule.fixes.find { |fx| fx.system == 'urn:xccdf:fix:script:sh' }
         assert_empty fix.subs
         assert fix.text
         assert fix.complexity
@@ -360,9 +378,11 @@ class TestResultFileTest < Minitest::Test
         assert fix.strategy
       end
 
-      test "should parse multiple subs for fix" do
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
-        fix = rule.fixes.find { |fix| !fix.subs.empty? }
+      test 'should parse multiple subs for fix' do
+        rule = @arf_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_selinux_state'
+        end
+        fix = rule.fixes.find { |f| !f.subs.empty? }
         assert_equal 2, fix.subs.count
         sub = fix.subs.last
         assert sub.id
@@ -370,21 +390,27 @@ class TestResultFileTest < Minitest::Test
         assert sub.use
       end
 
-      test "should resolve set-values for subs" do
+      test 'should resolve set-values for subs' do
         set_values = @arf_result_file.test_result.set_values
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        rule = @arf_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_selinux_state'
+        end
         rule.fixes.first.map_child_nodes(set_values).all? { |node| node.is_a? Nokogiri::XML::Text }
       end
 
-      test "should parse full fix text lines" do
+      test 'should parse full fix text lines' do
         set_values = @arf_result_file.test_result.set_values
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        rule = @arf_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_selinux_state'
+        end
         assert_equal 5, rule.fixes.first.full_text_lines(set_values).count
       end
 
-      test "should compose full fix" do
+      test 'should compose full fix' do
         set_values = @arf_result_file.test_result.set_values
-        rule = @arf_result_file.benchmark.rules.find { |rule| rule.id == "xccdf_org.ssgproject.content_rule_selinux_state" }
+        rule = @arf_result_file.benchmark.rules.find do |r|
+          r.id == 'xccdf_org.ssgproject.content_rule_selinux_state'
+        end
         assert_equal file_fixture('selinux_full_fix.sh').read, rule.fixes.first.full_text(set_values)
       end
     end
@@ -404,7 +430,7 @@ class TestResultFileTest < Minitest::Test
   def parse_set_values(result_file)
     set_values = result_file.test_result.set_values.map(&:to_h)
     idrefs = set_values.map { |val| val[:id] }
-    texts = set_values.map { | val| val[:text] }
+    texts = set_values.map { |val| val[:text] }
     refute_empty set_values
     assert_equal idrefs, idrefs.compact
     assert_equal texts, texts.compact
@@ -415,6 +441,10 @@ class TestResultFileTest < Minitest::Test
     ids = rules.map { |rule| rule[:id] }
     titles = rules.map { |rule| rule[:title] }
     selected = rules.map { |rule| rule[:selected] }
+    test_parsed_rule_info(rules, ids, titles, selected)
+  end
+
+  def test_parsed_rule_info(rules, ids, titles, selected)
     refute_empty rules
     assert_equal ids, ids.compact
     assert_equal titles, titles.compact

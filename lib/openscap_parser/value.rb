@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+
 module OpenscapParser
+  # A class for parsing Value information
   class Value < XmlNode
     include OpenscapParser::Util
 
@@ -23,11 +25,7 @@ module OpenscapParser
       cache = instance_variable_get("@#{type}")
 
       unless cache
-        element_name = type.to_s.sub('_', '-')
-
-        cache = parsed_xml.xpath(element_name).each_with_object({}) do |element, elements|
-          elements[element.at_xpath('@selector')&.text] = element&.text
-        end
+        cache = cache_for_element(type)
         instance_variable_set("@#{type}", cache)
       end
 
@@ -48,14 +46,22 @@ module OpenscapParser
       generic_selector(:value, selector)
     end
 
+    def cache_for_element(type)
+      element_name = type.to_s.sub('_', '-')
+
+      parsed_xml.xpath(element_name).each_with_object({}) do |element, elements|
+        elements[element.at_xpath('@selector')&.text] = element&.text
+      end
+    end
+
     def to_h
       {
-        :id => id,
-        :title => title,
-        :description => description,
-        :type => type,
-        :lower_bound => lower_bound,
-        :upper_bound => upper_bound
+        id:,
+        title:,
+        description:,
+        type:,
+        lower_bound:,
+        upper_bound:
       }
     end
   end

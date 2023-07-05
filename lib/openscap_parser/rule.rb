@@ -7,6 +7,7 @@ require 'openscap_parser/xml_file'
 
 # Mimics openscap-ruby Rule interface
 module OpenscapParser
+  # A class for parsing Rule information
   class Rule < XmlNode
     include OpenscapParser::Util
     include OpenscapParser::RuleReferences
@@ -25,22 +26,21 @@ module OpenscapParser
     end
 
     def title
-      @title ||= parsed_xml.at_css('title') &&
-        parsed_xml.at_css('title').text
+      @title ||= parsed_xml.at_css('title')&.text
     end
 
     def requires
       @requires ||= parsed_xml.xpath('./requires') &&
-        parsed_xml.xpath('./requires/@idref').flat_map do |r|
-          r.to_s&.split
-        end
+                    parsed_xml.xpath('./requires/@idref').flat_map do |r|
+                      r.to_s&.split
+                    end
     end
 
     def conflicts
       @conflicts ||= parsed_xml.xpath('./conflicts') &&
-        parsed_xml.xpath('./conflicts/@idref').flat_map do |c|
-          c.to_s&.split
-        end
+                     parsed_xml.xpath('./conflicts/@idref').flat_map do |c|
+                       c.to_s&.split
+                     end
     end
 
     def description
@@ -57,15 +57,15 @@ module OpenscapParser
       )
     end
 
-    alias :rule_reference_nodes_old :rule_reference_nodes
-    def rule_reference_nodes(xpath = "reference")
+    alias rule_reference_nodes_old rule_reference_nodes
+    def rule_reference_nodes(xpath = 'reference')
       rule_reference_nodes_old(xpath)
     end
 
     def rule_identifier
-      @identifier ||= identifier_node && RuleIdentifier.new(parsed_xml: identifier_node)
+      @rule_identifier ||= identifier_node && RuleIdentifier.new(parsed_xml: identifier_node)
     end
-    alias :identifier :rule_identifier
+    alias identifier rule_identifier
 
     def identifier_node
       @identifier_node ||= parsed_xml.at_xpath('ident')
@@ -76,31 +76,27 @@ module OpenscapParser
     end
 
     def parent_type
-      if parsed_xml.xpath("name(..)='Group'")
-        @parent_type = 'Group'
-      else
-        @parent_type = 'Benchmark'
-      end
+      @parent_type = if parsed_xml.xpath("name(..)='Group'")
+                       'Group'
+                     else
+                       'Benchmark'
+                     end
     end
 
     def values
-      parsed_xml.xpath("check/check-export").map { |r| r.at_xpath('@value-id')&.text }
+      parsed_xml.xpath('check/check-export').map { |r| r.at_xpath('@value-id')&.text }
     end
 
     def to_h
       {
-        :id => id,
-        :selected => selected,
-        :severity => severity,
-        :title => title,
-        :requires => requires,
-        :conflicts => conflicts,
-        :description => description,
-        :rationale => rationale,
-        :identifier => rule_identifier.to_h,
-        :parent_id => parent_id,
-        :parent_type => parent_type,
-        :values => values
+        id:, selected:,
+        severity:, title:,
+        requires:, conflicts:,
+        description:, rationale:,
+        identifier: rule_identifier.to_h,
+        parent_id:,
+        parent_type:,
+        values:
       }
     end
   end

@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module Ssg
+  # Methods for unarchiving
   class Unarchiver
-    UNZIP_CMD = ['unzip', '-o']
+    UNZIP_CMD = ['unzip', '-o'].freeze
 
     def initialize(ds_zip_filename, datastreams)
       @ds_zip_filename = ds_zip_filename

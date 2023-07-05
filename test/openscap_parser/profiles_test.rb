@@ -10,7 +10,7 @@ class ProfilesTest < Minitest::Test
       )
 
       assert_equal 'xccdf_org.ssgproject.content_profile_standard',
-        test_result_file.test_result.profile_id
+                   test_result_file.test_result.profile_id
     end
 
     test 'test result file ospp42 rhel' do
@@ -19,7 +19,7 @@ class ProfilesTest < Minitest::Test
       )
 
       assert_equal 'xccdf_org.ssgproject.content_profile_rht-ccp',
-        test_result_file.test_result.profile_id
+                   test_result_file.test_result.profile_id
     end
   end
 end

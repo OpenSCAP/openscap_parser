@@ -3,6 +3,7 @@
 require 'openscap_parser/rule_result'
 
 module OpenscapParser
+  # Methods related to finding and saving Rule Results
   module RuleResults
     def self.included(base)
       base.class_eval do

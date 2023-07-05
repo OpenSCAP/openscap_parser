@@ -3,6 +3,7 @@
 require 'openscap_parser/fix'
 
 module OpenscapParser
+  # Methods related to finding and saving Fixes
   module Fixes
     def self.included(base)
       base.class_eval do
@@ -12,7 +13,7 @@ module OpenscapParser
           end
         end
 
-        def fix_nodes(xpath = ".//fix")
+        def fix_nodes(xpath = './/fix')
           xpath_nodes(xpath)
         end
       end

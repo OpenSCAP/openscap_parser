@@ -3,6 +3,7 @@
 require 'openscap_parser/test_result'
 
 module OpenscapParser
+  # Methods related to finding and saving TestResults
   module TestResults
     def self.included(base)
       base.class_eval do

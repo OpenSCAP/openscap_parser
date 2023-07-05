@@ -3,6 +3,7 @@
 require 'openscap_parser/set_value'
 
 module OpenscapParser
+  # Methods related to finding and saving SetValues
   module SetValues
     def self.included(base)
       base.class_eval do
@@ -12,7 +13,7 @@ module OpenscapParser
           end
         end
 
-        def set_value_nodes(xpath = ".//set-value")
+        def set_value_nodes(xpath = './/set-value')
           xpath_nodes(xpath)
         end
       end
