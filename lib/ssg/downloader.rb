@@ -7,7 +7,7 @@ module Ssg
   # Downloads SCAP datastreams from the SCAP Security Guide
   # https://github.com/ComplianceAsCode/content
   class Downloader
-    RELEASES_API = 'https://api.github.com/repos'\
+    RELEASES_API = 'https://api.github.com/repos' \
                              '/ComplianceAsCode/content/releases/'
     SSG_DS_REGEX = /scap-security-guide-(\d+\.)+zip$/
 
@@ -44,29 +44,29 @@ module Ssg
       end
     end
 
-    def fetch(request, &block)
+    def fetch(request, &)
       Net::HTTP.start(
         request.uri.host, request.uri.port,
         use_ssl: request.uri.scheme['https']
       ) do |http|
-        check_response(http.request(request, &block), &block)
+        check_response(http.request(request, &), &)
       end
     end
 
-    def get(uri, &block)
-      fetch(Net::HTTP::Get.new(uri), &block)
+    def get(uri, &)
+      fetch(Net::HTTP::Get.new(uri), &)
     end
 
-    def head(uri, &block)
-      fetch(Net::HTTP::Head.new(uri), &block)
+    def head(uri, &)
+      fetch(Net::HTTP::Head.new(uri), &)
     end
 
-    def check_response(response, &block)
+    def check_response(response, &)
       case response
       when Net::HTTPSuccess
         response
       when Net::HTTPRedirection
-        get(URI(response['location']), &block)
+        get(URI(response['location']), &)
       else
         response.value
       end
@@ -74,8 +74,9 @@ module Ssg
 
     def get_chunked(uri, filename: datastream_filename)
       head(uri) do |response|
-        next unless Net::HTTPSuccess === response
-        open(filename, 'wb') do |file|
+        next unless response.is_a?(Net::HTTPSuccess)
+
+        File.open(filename, 'wb') do |file|
           response.read_body do |chunk|
             file.write(chunk)
           end

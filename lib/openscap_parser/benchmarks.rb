@@ -12,7 +12,7 @@ module OpenscapParser
           @benchmark ||= OpenscapParser::Benchmark.new(parsed_xml: benchmark_node)
         end
 
-        def benchmark_node(xpath = ".//Benchmark")
+        def benchmark_node(xpath = './/Benchmark')
           xpath_node(xpath)
         end
       end

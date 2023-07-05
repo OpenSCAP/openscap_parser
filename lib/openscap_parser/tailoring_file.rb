@@ -9,6 +9,7 @@ module OpenscapParser
 
     def valid?
       return true if @parsed_xml.root.name == 'Tailoring' && namespaces.keys.include?('xmlns:xccdf')
+
       false
     end
   end

@@ -13,7 +13,7 @@ module OpenscapParser
           )
         end
 
-        def tailoring_node(xpath = ".//Tailoring")
+        def tailoring_node(xpath = './/Tailoring')
           xpath_node(xpath)
         end
       end

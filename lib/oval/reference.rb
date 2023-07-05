@@ -1,6 +1,9 @@
-require "openscap_parser/xml_node"
+# frozen_string_literal: true
+
+require 'openscap_parser/xml_node'
 
 module Oval
+  # A class for parsing Oval Reference information
   class Reference < ::OpenscapParser::XmlNode
     def source
       @source ||= @parsed_xml['source']
@@ -15,7 +18,7 @@ module Oval
     end
 
     def to_h
-      { :source => source, :ref_id => ref_id, :ref_url => ref_url }
+      { source:, ref_id:, ref_url: }
     end
   end
 end

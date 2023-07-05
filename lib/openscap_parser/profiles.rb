@@ -14,7 +14,7 @@ module OpenscapParser
           end
         end
 
-        def profile_nodes(xpath = ".//Profile")
+        def profile_nodes(xpath = './/Profile')
           xpath_nodes(xpath)
         end
       end

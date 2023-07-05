@@ -12,9 +12,9 @@ module OpenscapParser
             Rule.new(parsed_xml: rule_node)
           end
         end
-        alias :rules :rule_objects
+        alias_method :rules, :rule_objects
 
-        def rule_nodes(xpath = ".//Rule")
+        def rule_nodes(xpath = './/Rule')
           xpath_nodes(xpath)
         end
       end

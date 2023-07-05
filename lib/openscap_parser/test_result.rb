@@ -4,15 +4,15 @@ require 'openscap_parser/rule_results'
 require 'openscap_parser/selectors'
 
 module OpenscapParser
+  # A class for parsing TestResult information
   class TestResult < XmlNode
     include OpenscapParser::RuleResults
     include OpenscapParser::Selectors
 
     def target
-      @target ||= parsed_xml.at_xpath('target') &&
-        parsed_xml.at_xpath('target').text || ''
+      @target ||= parsed_xml.at_xpath('target')&.text || ''
     end
-    alias :host :target
+    alias host target
 
     def target_fact_nodes
       @target_fact_nodes ||= parsed_xml.xpath('target-facts/fact')
@@ -23,23 +23,21 @@ module OpenscapParser
     end
 
     def title
-      @title ||= parsed_xml.at_xpath('title') &&
-        parsed_xml.at_xpath('title').text || ''
+      @title ||=          parsed_xml.at_xpath('title')&.text || ''
     end
 
     def identity
-      @identity ||= parsed_xml.at_xpath('identity') &&
-        parsed_xml.at_xpath('identity').text || ''
+      @identity ||= parsed_xml.at_xpath('identity')&.text || ''
     end
 
     def profile_id
       @profile_id ||= parsed_xml.at_xpath('profile') &&
-        parsed_xml.at_xpath('profile')['idref'] || ''
+                      parsed_xml.at_xpath('profile')['idref'] || ''
     end
 
     def benchmark_id
       @benchmark_id ||= parsed_xml.at_xpath('benchmark') &&
-        parsed_xml.at_xpath('benchmark')['id'] || ''
+                        parsed_xml.at_xpath('benchmark')['id'] || ''
     end
 
     def set_value_nodes
@@ -48,7 +46,7 @@ module OpenscapParser
 
     def score
       @score ||= parsed_xml.at_xpath('score') &&
-        parsed_xml.at_xpath('score').text.to_f
+                 parsed_xml.at_xpath('score').text.to_f
     end
 
     def start_time

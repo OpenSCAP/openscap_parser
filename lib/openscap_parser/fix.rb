@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 require 'openscap_parser/xml_node'
 require 'openscap_parser/subs'
 
 module OpenscapParser
+  # A class for parsing Fix information
   class Fix < XmlNode
     include OpenscapParser::Subs
 
@@ -27,7 +29,7 @@ module OpenscapParser
     end
 
     def full_text(set_values)
-      full_text_lines(set_values).join('')
+      full_text_lines(set_values).join
     end
 
     def full_text_lines(set_values)
@@ -42,13 +44,13 @@ module OpenscapParser
 
     def to_h
       {
-        :id => id,
-        :system => system,
-        :complexity => complexity,
-        :disruption => disruption,
-        :strategy => strategy,
-        :text => text,
-        :subs => subs.map(&:to_h)
+        id:,
+        system:,
+        complexity:,
+        disruption:,
+        strategy:,
+        text:,
+        subs: subs.map(&:to_h)
       }
     end
   end

@@ -10,6 +10,7 @@ require 'openscap_parser/values'
 
 # Mimics openscap-ruby Benchmark interface
 module OpenscapParser
+  # A class for parsing Benchmark information
   class Benchmark < XmlNode
     include OpenscapParser::Util
     include OpenscapParser::Rules
@@ -23,8 +24,7 @@ module OpenscapParser
     end
 
     def title
-      @title ||= @parsed_xml.xpath('title') &&
-        @parsed_xml.xpath('title').text
+      @title ||= @parsed_xml.xpath('title')&.text
     end
 
     def description
@@ -35,8 +35,7 @@ module OpenscapParser
     end
 
     def version
-      @version ||= @parsed_xml.xpath('version') &&
-        @parsed_xml.xpath('version').text
+      @version ||= @parsed_xml.xpath('version')&.text
     end
   end
 end

@@ -10,7 +10,7 @@ class XmlFileTest < Minitest::Test
 
   test 'parsed_xml parses a valid XML report' do
     assert_equal OpenscapParser::XmlFile.new(@valid_report).parsed_xml.class,
-      Nokogiri::XML::Document
+                 Nokogiri::XML::Document
   end
 
   test 'parsed_xml handles an invalid XML report' do
