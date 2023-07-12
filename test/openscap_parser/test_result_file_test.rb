@@ -161,12 +161,10 @@ class TestResultFileTest < Minitest::Test
     context 'rules' do
       test 'list all rules' do
         arbitrary_rules = [
-          # rubocop:disable Metrics/LineLength
           'xccdf_org.ssgproject.content_rule_dir_perms_world_writable_system_owned',
           'xccdf_org.ssgproject.content_rule_bios_enable_execution_restrictions',
           'xccdf_org.ssgproject.content_rule_gconf_gnome_screensaver_lock_enabled',
           'xccdf_org.ssgproject.content_rule_selinux_all_devicefiles_labeled'
-          # rubocop:enable Metrics/LineLength
         ]
 
         assert_empty(
