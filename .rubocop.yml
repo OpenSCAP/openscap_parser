@@ -115,3 +115,6 @@ Style/RedundantAssignment:
 
 Style/RedundantRegexpEscape:
   Enabled: false
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
